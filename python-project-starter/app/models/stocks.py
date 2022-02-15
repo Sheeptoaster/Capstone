@@ -1,4 +1,5 @@
 from .db import db
+import simplejson
 
 class Stock(db.Model):
     __tablename__ = 'stocks'
@@ -10,13 +11,11 @@ class Stock(db.Model):
     weight = db.Column(db.Numeric)
 
 
-    @property
-
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
             'ticker': self.ticker,
-            'price': self.price,
-            'weight': self.weight
+            'price': simplejson.dumps(self.price),
+            'weight': simplejson.dumps(self.weight)
         }

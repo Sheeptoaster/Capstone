@@ -11,3 +11,13 @@ class PriceHistory(db.Model):
     interval = db.Column(db.String)
 
     stock = relationship("Stock", foreign_keys=[stockId])
+
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "stockId": self.stockId,
+            "price": self.price,
+            "time": self.time,
+            "interval": self.interval
+        }

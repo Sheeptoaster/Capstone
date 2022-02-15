@@ -8,10 +8,13 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
+from .api.stock_routes import stock_routes
 
 from .seeds import seed_commands
 
 from .config import Config
+
+
 
 app = Flask(__name__)
 
@@ -31,6 +34,7 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(stock_routes, url_prefix='/api/stocks')
 db.init_app(app)
 Migrate(app, db)
 
@@ -70,3 +74,4 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_static_file('favicon.ico')
     return app.send_static_file('index.html')
+
