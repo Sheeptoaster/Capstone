@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
+import PortfolioMain from './auth/Portfolio/PortfolioMain';
 
 function User() {
   const [user, setUser] = useState({});
-  const { userId }  = useParams();
+  const { userId } = useParams();
 
   useEffect(() => {
     if (!userId) {
@@ -21,17 +22,26 @@ function User() {
   }
 
   return (
-    <ul>
-      <li>
-        <strong>User Id</strong> {userId}
-      </li>
-      <li>
-        <strong>Username</strong> {user.username}
-      </li>
-      <li>
-        <strong>Email</strong> {user.email}
-      </li>
-    </ul>
+    <>
+      <div className="profile-navbar container">
+        <nav className='profile-navbar'>
+          <ul className='profile-nav-items'>
+            <li className='nav-items'>
+              <NavLink className='nav-item-group nav-link text-underlined' to='/portfolio'>
+                Portfolio
+              </NavLink>
+              <NavLink className='nav-item-group nav-link text-underlined' to='/portfolio'>
+                Portfolio
+              </NavLink>
+              <NavLink className='nav-item-group nav-link text-underlined' to='/portfolio'>
+                Portfolio
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <PortfolioMain />
+    </>
   );
 }
 export default User;
