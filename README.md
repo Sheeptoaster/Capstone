@@ -10,14 +10,22 @@ This application can also be downloaded locally and run by:
   3. `cd /react-app` and install required dependencies with `npm install`
   4. In the `/python-project` directory follow the format in the .env.example to create your own .env file.
   5. Create your user and database in PostgreSQL
-  `psql -c "CREATE USER <username> WITH PASSWORD '<password>' CREATEDB"
-  psql -c "CREATE DATABASE <databaseName> WITH OWNER <username>"`
+  
+    `psql -c "CREATE USER <username> WITH PASSWORD '<password>' CREATEDB"`
+  
+    `psql -c "CREATE DATABASE <databaseName> WITH OWNER <username>"`
+  
   6. In the `/python-project` directory start the python virtual environment with `pipenv shell`
   7. In the virtual environment run the following
-  `flask db upgrade
-  flask db migrate
-  flask db seed all
-  flask run`
+  
+    `flask db upgrade`
+  
+    `flask db migrate`
+  
+    `flask db seed all`
+  
+    `flask run`
+  
   8. `cd /react-app` and start the application with `npm start`
   
   ## Technologies Used
