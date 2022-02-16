@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
-import PortfolioTableRow from "./PortfolioTableRow";
+import React, { useEffect, useState } from 'react'
+import WatchlistTableRow from './WatchlistTableRow'
 
-
-const PortfolioMain = ({ user }) => {
+function Watchlist({ user }) {
     const [stock, setStock] = useState([])
     const [update, setUpdate] = useState(false)
 
     useEffect(async () => {
-        const port_res = await fetch(`/api/portfolios/${user.id}`)
-        const data = await port_res.json()
+        const watch_res = await fetch(`/api/watchlists/${user.id}`)
+        const data = await watch_res.json()
         setStock(data)
         const update = setInterval(async () => {
-            const port_res = await fetch(`/api/portfolios/${user.id}`)
-            const data = await port_res.json()
+            const watch_res = await fetch(`/api/watchlists/${user.id}`)
+            const data = await watch_res.json()
             setStock(data)
-        }, 5 * 1000)
+        }, 30 * 1000)
         return () => clearInterval(update)
     }, [])
 
     useEffect(async () => {
-        const port_res = await fetch(`/api/portfolios/${user.id}`)
-        const data = await port_res.json()
+        const watch_res = await fetch(`/api/watchlists/${user.id}`)
+        const data = await watch_res.json()
         setStock(data)
         setUpdate(false)
     }, [update])
@@ -30,18 +29,16 @@ const PortfolioMain = ({ user }) => {
             <table>
                 <thead>
                     <tr>
-                        <th className="stock-name-header">Name</th>
+                        <th className='stock-name-header'>Name</th>
                         <th>Ticker</th>
                         <th>Current Price</th>
-                        <th>Owned</th>
-                        <th>Purchase Price</th>
-                        <th>Gain/Loss</th>
+                        <th>Alert Price</th>
                         <th className="options-header">Options</th>
                     </tr>
                 </thead>
                 {Object.values(stock)?.map(s => (
                     <tbody key={s.id}>
-                        <PortfolioTableRow s={s} setUpdate={setUpdate} user={user}/>
+                        <WatchlistTableRow s={s} setUpdate={setUpdate} user={user}/>
                     </tbody>
                 ))}
             </table>
@@ -49,4 +46,4 @@ const PortfolioMain = ({ user }) => {
     )
 }
 
-export default PortfolioMain
+export default Watchlist

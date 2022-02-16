@@ -72,5 +72,9 @@ td {
 }
 
 .options-header {
-    width: 15%;
+    width: fit-content;
+}
+
+.stock-name-header {
+    width: 20%;
 }

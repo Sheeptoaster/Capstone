@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PortfolioMain from './Portfolio/PortfolioMain';
 import './User.css'
+import Watchlist from './Watchlist/Watchlist';
 
 function User() {
   const [user, setUser] = useState({});
@@ -28,7 +29,7 @@ function User() {
     if (tab === 1) {
       view = <p>PlaceHolder for User Details</p>
     } else if (tab === 3) {
-      view = <p>PlaceHolder for Watchlist</p>
+      view = <Watchlist user={user} />
     } else {
       view = <PortfolioMain user={user} />
     }
