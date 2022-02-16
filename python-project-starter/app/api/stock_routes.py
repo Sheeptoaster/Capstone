@@ -40,7 +40,6 @@ def data(stock):
 
 def price_change(stock):
     change = Decimal(random())
-    print(stock.weight, change)
     if stock.weight > change:
         stock.price = (stock.price * (change * Decimal(2.5) / Decimal(100))) + stock.price
         # stock.weight = (stock.weight - (Decimal(0.05) * stock.weight)) + stock.weight

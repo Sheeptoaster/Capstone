@@ -1,7 +1,7 @@
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-
+import simplejson
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -32,5 +32,5 @@ class User(db.Model, UserMixin):
             "firstName": self.firstName,
             "lastName": self.lastName,
             'email': self.email,
-            "balance": self.balance
+            "balance": simplejson.dumps(self.balance)
         }

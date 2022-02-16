@@ -1,0 +1,61 @@
+.clear {
+    clear: both;
+}
+
+.slide-toggle {
+    display: none;
+}
+
+.profile-slidebar {
+    font-family: arial, sans-serif;
+    max-width: 600px;
+    margin: 50px auto;
+    overflow: hidden;
+}
+
+.profile-slidebar label {
+    width: 33%;
+    text-align: center;
+    display: block;
+    float: left;
+    color: #333;
+    opacity: 0.2;
+}
+
+.profile-slidebar:hover {
+    cursor: pointer;
+    color: #666;
+}
+
+.profile-slidebar label span {
+    display: block;
+    padding: 10px;
+}
+
+.slider {
+    width: 100%;
+    height: 5px;
+    display: block;
+    background: #ccc;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.slider .bar{
+    width: 33%;
+    height: 5px;
+    background: #333;
+    border-radius: 5px;
+}
+
+.profile-slidebar label, .slider .bar {
+    transition: all 500ms ease-in-out;
+}
+
+.profile-slidebar .slide-toggle:checked + label {
+    opacity: 1;
+}
+
+.profile-slidebar #slide-item-1:checked ~ .slider .bar{ margin-left: 0%; }
+.profile-slidebar #slide-item-2:checked ~ .slider .bar{ margin-left: 33%; }
+.profile-slidebar #slide-item-3:checked ~ .slider .bar{ margin-left: 66%; }
