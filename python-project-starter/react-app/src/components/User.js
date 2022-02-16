@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import PortfolioMain from './auth/Portfolio/PortfolioMain';
+import PortfolioMain from './Portfolio/PortfolioMain';
 import './User.css'
 
 function User() {
@@ -24,13 +24,14 @@ function User() {
   }
 
   let view;
-
-  if (tab === 1) {
-    view = <p>PlaceHolder for User Details</p>
-  } else if (tab === 3) {
-    view = <p>PlaceHolder for Watchlist</p>
-  } else {
-    view = <PortfolioMain user={user}/>
+  if(user.id) {
+    if (tab === 1) {
+      view = <p>PlaceHolder for User Details</p>
+    } else if (tab === 3) {
+      view = <p>PlaceHolder for Watchlist</p>
+    } else {
+      view = <PortfolioMain user={user} />
+    }
   }
 
   const handleUserDetails = () => {
@@ -50,7 +51,7 @@ function User() {
           name='slideItem' id='slide-item-1'
           className='slide-toggle' />
           <label htmlFor='slide-item-1'>
-            <span onClick={handleUserDetails}>Portfolio</span>
+            <span onClick={handleUserDetails}>User Details</span>
           </label>
 
           <input type='radio'
@@ -64,7 +65,7 @@ function User() {
           name='slideItem' id='slide-item-3'
           className='slide-toggle' />
           <label htmlFor='slide-item-3'>
-            <span onClick={handleWatchlist}>Portfolio</span>
+            <span onClick={handleWatchlist}>Watchlist</span>
           </label>
 
           <div className='clear'></div>

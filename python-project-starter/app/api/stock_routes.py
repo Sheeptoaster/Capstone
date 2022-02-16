@@ -1,10 +1,10 @@
 ## Historic Price Data Function Theory
+from crypt import methods
 from flask import Blueprint
 from random import random
 from time import time
 from decimal import Decimal
 
-from flask import Blueprint
 from app.models import db
 from app.models import Stock, PriceHistory
 
@@ -62,3 +62,4 @@ def price_data():
     for stock in stocks:
         res[stock.id] = stock.to_dict()
     return res
+

@@ -13,6 +13,13 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
+  useEffect(async () => {
+    const postData = setInterval(async () => {
+      const res = await fetch(`/api/stocks/`)
+    }, 30 * 1000)
+    return () => clearInterval(postData)
+  }, [])
+
   useEffect(() => {
     (async() => {
       await dispatch(authenticate());
@@ -34,9 +41,6 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
-        </ProtectedRoute>
         <ProtectedRoute path='/p/:userId' exact={true} >
           <User />
         </ProtectedRoute>
