@@ -62,4 +62,3 @@ def price_data():
     for stock in stocks:
         res[stock.id] = stock.to_dict()
     return res
-
