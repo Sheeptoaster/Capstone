@@ -1,1 +1,9 @@
 /* TODO Add site wide styles */
+
+:root {
+    --dark-blue: #293F90;
+    --brownish: #7A6D7D;
+    --light-blue: #46AEEF;
+    --light-green: #9EB1B1;
+    --off-white: #EEF1EF;
+}
