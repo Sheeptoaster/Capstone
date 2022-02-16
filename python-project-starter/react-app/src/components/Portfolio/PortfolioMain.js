@@ -26,7 +26,7 @@ const PortfolioMain = ({ user }) => {
     }, [update])
 
     return (
-        <div>
+        <div className="portfolio-container">
             <table>
                 <thead>
                     <tr>
@@ -36,7 +36,7 @@ const PortfolioMain = ({ user }) => {
                         <th>Owned</th>
                         <th>Purchase Price</th>
                         <th>Gain/Loss</th>
-                        <th>Options</th>
+                        <th className="options-header">Options</th>
                     </tr>
                 </thead>
                 {Object.values(stock)?.map(s => (

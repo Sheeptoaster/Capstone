@@ -1,0 +1,76 @@
+
+table {
+	width: 70%;
+	border-collapse: collapse;
+    margin:50px auto;
+    table-layout: fixed;
+}
+
+tr:nth-of-type(odd) {
+	background: var(--off-white);
+}
+
+th {
+	background: var(--dark-blue);
+	color: white;
+	font-weight: bold;
+    text-align: center;
+}
+
+td, th {
+	padding: 10px;
+	border: 1px solid rgb(149, 146, 146);
+	font-size: 18px;
+}
+
+td {
+    color: #414242
+}
+
+#edit-owned {
+    width: 50%;
+    border-radius: .1em;
+}
+
+
+#portfolio-stock-loss {
+    background-color: rgb(255, 148, 148);
+}
+
+#portfolio-stock-profit {
+    background-color: rgb(133, 250, 133);
+}
+
+.green-btn{
+    width: fit-content;
+    height: 25px;
+    padding: 2px 9px 13px 10px;
+    border-radius: 36px;
+    box-shadow: 0 -5px 16px -4px rgba(0, 167, 254, 0.1), 0 5px 8px 1px rgba(93, 211, 109, 0.2);
+    background: linear-gradient(#26C778 0%, #32CA76 67%, #5DD36D 100%);;
+    color: #FFF;
+    text-align: center;
+    font-size: 11pt;
+}
+
+.red-btn{
+    width: fit-content;
+    height: 25px;
+    padding: 2px 9px 13px 10px;
+    border-radius: 36px;
+    box-shadow: 0 -5px 8px -4px rgba(255, 0, 0, 0.1), 0 5px 8px 1px rgba(247, 147, 30, 0.2);
+    background: linear-gradient(#FF3038 0%, #FF3829 67%, #FF4314 100%);;
+    color: #FFF;
+    text-align: center;
+    font-size: 11pt;
+}
+
+.portfolio-btn-container {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+
+.options-header {
+    width: 15%;
+}
