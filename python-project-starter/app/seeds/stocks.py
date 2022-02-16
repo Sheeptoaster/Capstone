@@ -2,7 +2,7 @@ from app.models import db, Stock
 
 def seed_stocks():
     amd = Stock(
-        name="Advanced Mico Devices", ticker="AMD", price=120.98, weight=0.5
+        name="Advanced Micro Devices", ticker="AMD", price=120.98, weight=0.5
     )
     apple = Stock(
         name="Apple", ticker="AAPL", price=171.15, weight=0.5
@@ -80,4 +80,3 @@ def seed_stocks():
 def undo_stocks():
     db.session.execute("TRUNCATE stocks RESTART IDENTITY CASCADE;")
     db.session.commit()
-

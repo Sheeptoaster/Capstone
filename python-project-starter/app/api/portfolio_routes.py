@@ -11,7 +11,7 @@ def get_user_portfolio(userId):
     if portfolio == None:
         return
     for s in portfolio:
-        stock = Stock.query.get(s.id)
+        stock = Stock.query.get(s.stockId)
         res[s.id] = {
             "id": s.id,
             "stockId": s.stockId,
