@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
 import './Navbar.css'
 
 const NavBar = () => {
   const [sidebar, setSidebar] = useState(false)
-
+  const user = useSelector(state => state.session.user)
   const handleSidebar = () => {
     setSidebar(!sidebar)
   }
+
 
   return (
     <>
@@ -25,42 +27,33 @@ const NavBar = () => {
             </NavLink>
           </li>
 
-          <li className='nav-text'>
-            <NavLink to="#">
-              <span>Home</span>
+          <li className='nav-text' onClick={handleSidebar}>
+            <NavLink to="/">
+              <span onClick={handleSidebar} >Home</span>
             </NavLink>
           </li>
 
-          <li className='nav-text'>
-            <NavLink to="#">
-              <span>Dashboard</span>
+          <li className='nav-text' onClick={handleSidebar}>
+            <NavLink to={`/p/${user.id}`}>
+              <span onClick={handleSidebar}>Dashboard</span>
             </NavLink>
           </li>
 
-          <li className='nav-text'>
+          <li className='nav-text' onClick={handleSidebar}>
             <NavLink to="#">
-              <span>Portfolio</span>
+              <span onClick={handleSidebar}>Top Increase</span>
             </NavLink>
           </li>
 
-          <li className='nav-text'>
+          <li className='nav-text' onClick={handleSidebar}>
             <NavLink to="#">
-              <span>Watchlist</span>
+              <span onClick={handleSidebar}>Top Decrease</span>
             </NavLink>
           </li>
 
-          <li className='nav-text'>
-            <NavLink to="#">
-              <span>Top Increase</span>
-            </NavLink>
+          <li>
+            <LogoutButton onClick={handleSidebar}/>
           </li>
-
-          <li className='nav-text'>
-            <NavLink to="#">
-              <span>Top Decrease</span>
-            </NavLink>
-          </li>
-
         </ul>
       </nav>
     </>
