@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PortfolioMain from './auth/Portfolio/PortfolioMain';
+import './User.css'
 
 function User() {
   const [user, setUser] = useState({});
+  const [tab, setTab] = useState(2)
   const { userId } = useParams();
 
   useEffect(() => {
@@ -21,26 +23,57 @@ function User() {
     return null;
   }
 
+  let view;
+
+  if (tab === 1) {
+    view = <p>PlaceHolder for User Details</p>
+  } else if (tab === 3) {
+    view = <p>PlaceHolder for Watchlist</p>
+  } else {
+    view = <PortfolioMain user={user}/>
+  }
+
+  const handleUserDetails = () => {
+    setTab(1)
+  }
+  const handlePortfolio = () => {
+    setTab(2)
+  }
+  const handleWatchlist = () => {
+    setTab(3)
+  }
+
   return (
     <>
-      <div className="profile-navbar container">
-        <nav className='profile-navbar'>
-          <ul className='profile-nav-items'>
-            <li className='nav-items'>
-              <NavLink className='nav-item-group nav-link text-underlined' to='/portfolio'>
-                Portfolio
-              </NavLink>
-              <NavLink className='nav-item-group nav-link text-underlined' to='/portfolio'>
-                Portfolio
-              </NavLink>
-              <NavLink className='nav-item-group nav-link text-underlined' to='/portfolio'>
-                Portfolio
-              </NavLink>
-            </li>
-          </ul>
+        <nav className='profile-slidebar'>
+          <input type='radio'
+          name='slideItem' id='slide-item-1'
+          className='slide-toggle' />
+          <label htmlFor='slide-item-1'>
+            <span onClick={handleUserDetails}>Portfolio</span>
+          </label>
+
+          <input type='radio'
+          name='slideItem' id='slide-item-2'
+          className='slide-toggle' defaultChecked />
+          <label htmlFor='slide-item-2'>
+            <span onClick={handlePortfolio}>Portfolio</span>
+          </label>
+
+          <input type='radio'
+          name='slideItem' id='slide-item-3'
+          className='slide-toggle' />
+          <label htmlFor='slide-item-3'>
+            <span onClick={handleWatchlist}>Portfolio</span>
+          </label>
+
+          <div className='clear'></div>
+
+          <div className='slider'>
+            <div className='bar'></div>
+          </div>
         </nav>
-      </div>
-      <PortfolioMain />
+      {view}
     </>
   );
 }

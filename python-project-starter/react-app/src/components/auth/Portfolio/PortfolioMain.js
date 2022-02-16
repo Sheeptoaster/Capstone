@@ -1,6 +1,6 @@
 import React from "react";
 
-const PortfolioMain = () => {
+const PortfolioMain = ({user}) => {
     return (
         <div>
             Test Page
