@@ -11,6 +11,7 @@ function StockOverview() {
         const res = await fetch("/api/stocks/all")
         const data = await res.json()
         setStocks(data)
+        setUpdate(false)
     }, [update])
 
     return (

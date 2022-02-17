@@ -12,6 +12,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     const [clickBuy, setClickBuy] = useState(false)
     const [clickSell, setClickSell] = useState(false)
     const [watchlist, setWatchlist] = useState(false)
+    const [priceAlert, setPriceAlert] = useState(0)
 
     const handleClickBuy = () => {
         setClickBuy(true)
@@ -23,6 +24,8 @@ function HomeStockTableRow({ s, setUpdate, user }) {
 
     const handleCancel = () => {
         setNewAmount(s.owned || 0)
+        setPriceAlert(0)
+        setWatchlist(false)
         setClickBuy(false)
         setClickSell(false)
     }
@@ -63,7 +66,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return
         }
 
-        if (newAmount === 0) {
+        if (newAmount == 0) {
             const res = await fetch(`/api/stocks/sell/${s.id}/${user.id}`, {
                 method: "DELETE"
             })
@@ -78,9 +81,8 @@ function HomeStockTableRow({ s, setUpdate, user }) {
                 })
             })
         }
-
-        setClickSell(false)
         setUpdate(true)
+        setClickSell(false)
     }
 
     let owned
@@ -129,11 +131,46 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         }
     }
 
+    const handleWatchClick = () => {
+        setWatchlist(true)
+    }
+    const handleUnwatch = async () => {
+        const res = await fetch(`/api/watchlists/change/${s.id}/${user.id}`, {
+            method: "DELETE"
+        })
+        setPriceAlert(0)
+        setUpdate(true)
+    }
+
+    const handleEditAlert = async () => {
+        const res = await fetch(`/api/watchlists/create/${s.id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "alert": parseFloat(priceAlert)
+            })
+        })
+
+        setUpdate(true)
+        setWatchlist(false)
+    }
+
     let watched
+
     if (s.watched) {
-        watched = <td><FontAwesomeIcon icon="fa-bell" /></td>
+        watched = <td><FontAwesomeIcon icon="fa-bell" onClick={handleUnwatch} /></td>
     } else {
-        watched = <td><FontAwesomeIcon icon="fa-bell-slash" /></td>
+        if (watchlist) {
+            watched = <td>
+                <input name="price-alert" type='number' min={0} value={priceAlert} onChange={e => setPriceAlert(e.target.value)} />
+                <button onClick={handleEditAlert}>Submit</button>
+                <button onClick={handleCancel}>Cancel</button>
+            </td>
+        } else {
+            watched = <td onClick={handleWatchClick}><FontAwesomeIcon icon="fa-bell-slash" /></td>
+        }
     }
 
     return (

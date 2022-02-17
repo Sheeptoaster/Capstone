@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Blueprint, jsonify, request
 from simplejson import dumps
 from app.models import db, Watchlist, Stock, User
@@ -31,7 +32,6 @@ def change_price_alert(userId, stockId):
 
     data = request.get_json()
 
-    print("TESTING", data)
     if request.method == "DELETE":
         db.session.delete(watched)
         db.session.commit()
@@ -55,3 +55,15 @@ def get_alerts():
             res[a.id] = a.to_dict()
 
     return jsonify(res)
+
+@watchlist_routes.route('/create/<int:stockId>', methods=["POST"])
+def add_watchlist(stockId):
+    data = request.get_json()
+    watch = Watchlist(
+        userId= current_user.id,
+        stockId= stockId,
+        priceAlert= data['alert']
+    )
+    db.session.add(watch)
+    db.session.commit()
+    return "Added"
