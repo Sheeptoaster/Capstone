@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
@@ -11,11 +11,17 @@ import { authenticate } from './store/session';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
+  const [notifications, setNotifications] = useState(0)
+
   const dispatch = useDispatch();
 
   useEffect(async () => {
     const postData = setInterval(async () => {
       const res = await fetch(`/api/stocks/`)
+      const alert_res = await fetch(`/api/watchlists/alert/`)
+      const data = await alert_res.json()
+      console.log(Object.keys(data).length)
+      setNotifications(Object.keys(data).length)
     }, 30 * 1000)
     return () => clearInterval(postData)
   }, [])
@@ -23,6 +29,9 @@ function App() {
   useEffect(() => {
     (async() => {
       await dispatch(authenticate());
+      const alert_res = await fetch(`/api/watchlists/alert/`)
+      const data = await alert_res.json()
+      setNotifications(Object.keys(data).length)
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -33,7 +42,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar notifications={notifications} />
       <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />
@@ -42,7 +51,7 @@ function App() {
           <SignUpForm />
         </Route>
         <ProtectedRoute path='/p/:userId' exact={true} >
-          <User />
+          <User notifications={notifications}/>
         </ProtectedRoute>
         <ProtectedRoute path='/' exact={true} >
           <h1>My Home Page</h1>

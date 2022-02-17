@@ -1,4 +1,5 @@
 from .db import db
+from simplejson import dumps
 from sqlalchemy.orm import relationship
 
 class Watchlist(db.Model):
@@ -11,3 +12,11 @@ class Watchlist(db.Model):
 
     user = relationship("User", foreign_keys=[userId])
     stock = relationship("Stock", foreign_keys=[stockId])
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "userId": self.userId,
+            "stockId": self.stockId,
+            "priceAlert": dumps(self.priceAlert)
+        }

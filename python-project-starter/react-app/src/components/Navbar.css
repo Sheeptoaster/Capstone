@@ -66,6 +66,12 @@ li a:visited {
     background-color: var(--light-blue);
 }
 
+.alert-ready a:hover {
+    background-color: rgb(226, 1, 1);
+    box-shadow: 0 0 4px 9px rgb(226, 1, 1);
+}
+
+
 .nav-menu-items {
     width: 100%;
 }
