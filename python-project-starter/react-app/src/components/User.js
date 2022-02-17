@@ -3,8 +3,14 @@ import { useParams } from 'react-router-dom';
 import PortfolioMain from './Portfolio/PortfolioMain';
 import './User.css'
 import Watchlist from './Watchlist/Watchlist';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
-function User() {
+library.add(faBell);
+
+
+function User({ notifications }) {
   const [user, setUser] = useState({});
   const [tab, setTab] = useState(2)
   const { userId } = useParams();
@@ -45,6 +51,19 @@ function User() {
     setTab(3)
   }
 
+  let notif
+
+  if (notifications > 0) {
+    notif = <label style={{"backgroundColor": "red", "borderRadius": ".25em"}} htmlFor='slide-item-3' className='watchlist-user-tab'>
+    <span onClick={handleWatchlist}>Watchlist </span>
+    <FontAwesomeIcon icon="bell" />
+    </label>
+  } else {
+    notif = <label htmlFor='slide-item-3' className='watchlist-user-tab' onClick={handleWatchlist}>
+            <span >Watchlist </span>
+          </label>
+  }
+
   return (
     <>
         <nav className='profile-slidebar'>
@@ -65,9 +84,8 @@ function User() {
           <input type='radio'
           name='slideItem' id='slide-item-3'
           className='slide-toggle' />
-          <label htmlFor='slide-item-3'>
-            <span onClick={handleWatchlist}>Watchlist</span>
-          </label>
+
+          {notif}
 
           <div className='clear'></div>
 
