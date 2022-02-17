@@ -32,11 +32,10 @@ def add_to_portfolio(stockId, userId):
     stock = Stock.query.get(stockId)
     data = request.get_json()
 
-
     if (stock.price * data['amount'] > user.balance):
         return 'Not Enough Money.'
 
-    portfolio.purchasePrice = ((portfolio.purchasePrice * portfolio.count) + (stock.price * data['amount'])) / (portfolio.count + data['amount'])
+    portfolio.purchasePrice = ((portfolio.purchasePrice * portfolio.count) + (stock.price * (data['amount'] - portfolio.count))) / (data['amount'])
     user.balance = user.balance - stock.price * (data['amount'] - portfolio.count)
     portfolio.count = data['amount']
     db.session.commit()

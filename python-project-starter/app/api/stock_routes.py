@@ -132,8 +132,9 @@ def buy_stock(stockId, userId):
     user = User.query.get(current_user.id)
     portfolio = Portfolio.query.filter(stockId == Portfolio.stockId).filter(userId == Portfolio.userId).first()
     if user.balance > (stock.price * data['amount']):
-        user.balance = user.balance - (stock.price * (data['amount'] - portfolio.count))
+
         if request.method == "POST":
+            user.balance = user.balance - (stock.price * data['amount'])
             bought = Portfolio(
                 userId= current_user.id,
                 stockId= stockId,
@@ -145,6 +146,7 @@ def buy_stock(stockId, userId):
             return bought.to_dict()
 
         if request.method == "PUT":
+            user.balance = user.balance - (stock.price * (data['amount'] - (portfolio.count)))
             portfolio.purchasePrice = ((portfolio.count * portfolio.purchasePrice) + ((data['amount'] - portfolio.count) * stock.price)) / (data['amount'])
             portfolio.count = data['amount']
             db.session.commit()
@@ -160,15 +162,16 @@ def sell_stock(stockId, userId):
     stock = Stock.query.get(stockId)
     user = User.query.get(current_user.id)
     portfolio = Portfolio.query.filter(stockId == Portfolio.stockId).filter(userId == Portfolio.userId).first()
-    user.balance = user.balance + (stock.price * (portfolio.count - data['amount']))
 
     if request.method == "PUT":
+        user.balance = user.balance + (stock.price * (portfolio.count - data['amount']))
         portfolio.purchasePrice = ((portfolio.count * portfolio.purchasePrice) + ((portfolio.count - data["amount"]) * stock.price)) / (portfolio.count)
         portfolio.count = data['amount']
         db.session.commit()
         return "Updated"
 
     if request.method == "DELETE":
+        user.balance = user.balance + (stock.price * portfolio.count)
         db.session.delete(portfolio)
         db.session.commit()
         return "Deleted"

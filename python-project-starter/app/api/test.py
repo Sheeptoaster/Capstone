@@ -4,7 +4,7 @@ from decimal import Decimal
 change = Decimal(random())
 
 price = Decimal(100)
-weight = Decimal(0.9)
+weight = Decimal(0.5)
 print("CHANGE", change)
 
 if weight < change:
