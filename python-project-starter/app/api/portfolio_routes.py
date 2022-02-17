@@ -32,11 +32,16 @@ def add_to_portfolio(stockId, userId):
     stock = Stock.query.get(stockId)
     data = request.get_json()
 
+    ## User balance validation Check
     if (stock.price * data['amount'] > user.balance):
         return 'Not Enough Money.'
 
+    ## Averages Current PurchasePrice with Amount Owned and Recalculates New Avergage with New purchase values
     portfolio.purchasePrice = ((portfolio.purchasePrice * portfolio.count) + (stock.price * (data['amount'] - portfolio.count))) / (data['amount'])
+
+    ## Updates User balance to reflect remaining balance after purchase
     user.balance = user.balance - stock.price * (data['amount'] - portfolio.count)
+
     portfolio.count = data['amount']
     db.session.commit()
 
@@ -52,13 +57,17 @@ def sell_stock(stockId, userId):
 
 
     if request.method == 'DELETE':
+        ## Updates User Balance to Reflect Updated Balance
         user.balance = user.balance + (stock.price * portfolio.count)
         db.session.delete(portfolio)
         db.session.commit()
         return "Stock sold"
 
     if request.method == 'PUT':
+        ## Updates User Balance to Reflect Updated Balance
         user.balance = user.balance + (stock.price * (portfolio.count - data['amount']))
+
+        ## Updates Portfolio Owned Count
         portfolio.count = portfolio.count - (portfolio.count - data['amount'])
         db.session.commit()
         return portfolio.to_dict()

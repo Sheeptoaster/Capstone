@@ -10,18 +10,23 @@ const PortfolioMain = ({ user }) => {
         const port_res = await fetch(`/api/portfolios/${user.id}`)
         const data = await port_res.json()
         setStock(data)
+        // Function to Fetch Updated Price Information Every n Seconds
         const update = setInterval(async () => {
             const port_res = await fetch(`/api/portfolios/${user.id}`)
             const data = await port_res.json()
             setStock(data)
         }, 5 * 1000)
+        // Clears Interval to Prevent Memory Leak
         return () => clearInterval(update)
     }, [])
 
     useEffect(async () => {
+        //Runs Fetch for Updated Price Information When Update is Called On
         const port_res = await fetch(`/api/portfolios/${user.id}`)
         const data = await port_res.json()
         setStock(data)
+        
+        //Set Update to False Allow Conditional Calls in Same Component to Continue to Work
         setUpdate(false)
     }, [update])
 

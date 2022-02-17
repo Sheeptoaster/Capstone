@@ -6,6 +6,7 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
     const [editAlert, setEditAlert] = useState(false)
     const [conDelete, setConDelete] = useState(false)
 
+    
     const handleUpdate = async () => {
         if (newAmount === s.priceAlert) {
             setEditAlert(false)

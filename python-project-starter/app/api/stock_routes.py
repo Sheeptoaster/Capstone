@@ -44,22 +44,32 @@ def purge_price_data(stock):
     return
 
 def data(stock):
+    ## Posts Price Data Point to PriceHistory Table
     post_price_data(stock)
+    ## Removes Data from PriceHistory Table if more than 500 entries with that stockId exist
     purge_price_data(stock)
 
 
 ## Randomized Price Change Algo
 
 def price_change(stock):
+    ## Creates Random Dec Between 0 and 1
     change = Decimal(random())
+
+    ## If stock's weight is less than change
+    ## Stock Weight Increases + Stock Value Increase
     if stock.weight < change:
         stock.price = (stock.price * (change * Decimal(3.5) / Decimal(100))) + stock.price
         stock.weight = stock.weight + (stock.weight * (change / Decimal(8.5)))
         db.session.commit()
+    ## If Stock's weight is greater than change
+    ## Stock Weight Decreases + Stock Value Decreases
     else:
         stock.price = (stock.price * (change * Decimal(3.5) / Decimal(100) * Decimal(-1))) + stock.price
         stock.weight = stock.weight - (stock.weight * (change / Decimal(8.5)))
         db.session.commit()
+
+    ## Sends Updated Stock to Be Catalogged
     data(stock)
 
 

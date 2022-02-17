@@ -16,8 +16,11 @@ const NavBar = ({ notifications }) => {
     setSidebar(!sidebar)
   }
 
+  //Declare alert var
   let alert
 
+  //Check for amount of stocks that are under priceAlert val in Watchlist
+  //Sets styling based on result
   if (notifications > 0) {
     alert = <li className='nav-text alert-ready' onClick={handleSidebar} style={{"backgroundColor": "red", "borderRadius": ".25em"}}>
     <NavLink to={`/p/${user.id}`}>

@@ -9,18 +9,21 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
     const [editContentSell, setEditContentSell] = useState(false)
 
 
-
+    //Changes Buttons from Buy/Sell To Buy/Cancel and Turns Owned Field to Input
     const clickBuy = () => {
         setEditContentBuy(true)
         setEditBuy(true)
     }
 
+    //Changes Buttons from Buy/Sell To Sell/Cancel and Turns Owned Field to Input
     const clickSell = () => {
         setEditContentSell(true)
         setEditSell(true)
     }
 
+    //Checks InputVal against prevVal to run appropriate action
     const handleBuy = async () => {
+        //Reverts Buttons to starting state and returns out
         if (newAmount === s.count) {
             setEditBuy(false)
             setEditContentBuy(false)
@@ -40,12 +43,15 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
         setEditBuy(false)
         setEditContentBuy(false)
     }
+
     const handleSell = async () => {
+        //Reverts Buttons to starting state and returns out
         if (newAmount === s.count) {
             setEditSell(false)
             setEditContentSell(false)
             return
         }
+
 
         if (newAmount == 0) {
             const sell_res = await fetch(`/api/portfolios/sell/${s.stockId}/${user.id}`, {
@@ -72,6 +78,7 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
         return
     }
 
+    //Blanket Cancel Function to Revert to default View
     const handleCancel = () => {
         if (editBuy) setEditBuy(false)
         if (editSell) setEditSell(false)
@@ -80,9 +87,10 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
         setNewAmount(s.count)
     }
 
-
+    //Declare Btn var
     let btn;
 
+    //Checks if Edit or Sell Btn have been clicked to render new buttons to complete either action
     if (editBuy) {
         btn = <td className="portfolio-btn-container">
         <button className="green-btn" onClick={handleBuy}>Buy</button>
@@ -93,6 +101,7 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
         <button className="red-btn" onClick={handleSell}>Sell</button>
         <button className="red-btn" onClick={handleCancel}>Cancel</button>
     </td>
+    //Default Btn render
     } else {
         btn = <td className="portfolio-btn-container">
                 <button className="green-btn" onClick={clickBuy}>Buy</button>
@@ -100,20 +109,25 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
             </td>
     }
 
+    //Declare amountField var
     let amountField
 
+    //Declare profit var
     let profit
 
+    //Runs equation to determine positive or negative values and returns value with appropriate id to style
     if ((parseFloat(s.currentPrice - s.purchasePrice) / s.purchasePrice * 100).toFixed(2) > 0) {
         profit = <td id='portfolio-stock-profit'>{parseFloat((s.currentPrice - s.purchasePrice) / s.purchasePrice * 100).toFixed(2)}%</td>
     } else {
         profit = <td id='portfolio-stock-loss'>{parseFloat((s.currentPrice - s.purchasePrice) / s.purchasePrice * 100).toFixed(2)}%</td>
     }
 
+    //Run when Buy or Sell Btn have been clicked to render input field with conditions
     if (editContentBuy) {
         amountField = <td><input id="edit-owned" type="number" min={s.count} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)}/></td>
     } else if (editContentSell) {
         amountField = <td className="portfolio-td"><input type="number" id="edit-owned" min={0} max={s.count} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)}/></td>
+    //Default render for amountField
     } else {
         amountField = <td>{parseFloat(s.count).toFixed(3)}</td>
     }

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PortfolioMain from './Portfolio/PortfolioMain';
 import './User.css'
 import Watchlist from './Watchlist/Watchlist';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from 'react-redux';
 
 library.add(faBell);
 
@@ -16,7 +15,6 @@ function User({ notifications }) {
   const [tab, setTab] = useState(2)
   const { userId } = useParams();
 
-  const curr = useSelector(state => state.session.user)
 
   useEffect(() => {
     if (!userId) {
@@ -33,8 +31,10 @@ function User({ notifications }) {
     return null;
   }
 
-
+  //Declare view var
   let view;
+
+  // Allows Conditional Rendering of Components Based On Current Tab Selected
   if(user.id) {
     if (tab === 1) {
       view = <p>PlaceHolder for User Details</p>
@@ -45,6 +45,7 @@ function User({ notifications }) {
     }
   }
 
+  //Sets tab value to allow components to be rendered correctly
   const handleUserDetails = () => {
     setTab(1)
   }
@@ -55,8 +56,11 @@ function User({ notifications }) {
     setTab(3)
   }
 
+  //Declare notif var
   let notif
 
+  //Check for amount of stocks that are under priceAlert val in Watchlist
+  //Sets styling based on result
   if (notifications > 0) {
     notif = <label style={{"backgroundColor": "red", "borderRadius": ".25em"}} htmlFor='slide-item-3' className='watchlist-user-tab'>
     <span onClick={handleWatchlist}>Watchlist </span>
