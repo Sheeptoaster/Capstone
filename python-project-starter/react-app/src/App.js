@@ -20,7 +20,6 @@ function App() {
       const res = await fetch(`/api/stocks/`)
       const alert_res = await fetch(`/api/watchlists/alert/`)
       const data = await alert_res.json()
-      console.log(Object.keys(data).length)
       setNotifications(Object.keys(data).length)
     }, 30 * 1000)
     return () => clearInterval(postData)

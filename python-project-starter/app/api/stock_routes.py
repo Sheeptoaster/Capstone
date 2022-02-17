@@ -40,15 +40,15 @@ def data(stock):
 
 def price_change(stock):
     change = Decimal(random())
-    if stock.weight > change:
-        stock.price = (stock.price * (change * Decimal(2.5) / Decimal(100))) + stock.price
+    if stock.weight < change:
+        stock.price = (stock.price * (change * Decimal(3.5) / Decimal(100))) + stock.price
         # stock.weight = (stock.weight - (Decimal(0.05) * stock.weight)) + stock.weight
         stock.weight = stock.weight + (stock.weight * (change / Decimal(8.5)))
         db.session.commit()
     else:
-        stock.price = (stock.price * (change * Decimal(2.5) / Decimal(100) * Decimal(-1))) + stock.price
+        stock.price = (stock.price * (change * Decimal(3.5) / Decimal(100) * Decimal(-1))) + stock.price
         # stock.weight = stock.weight / Decimal(1.05)
-        stock.weight = stock.weight - (stock.weight * (change / Decimal(8.5)))
+        stock.weight = stock.weight - (stock.weight * (change / Decimal(13.5)))
         db.session.commit()
     data(stock)
 
