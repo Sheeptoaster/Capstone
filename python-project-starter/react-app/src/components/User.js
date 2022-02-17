@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import PortfolioMain from './Portfolio/PortfolioMain';
 import './User.css'
 import Watchlist from './Watchlist/Watchlist';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from 'react-redux';
 
 library.add(faBell);
 
@@ -14,6 +15,8 @@ function User({ notifications }) {
   const [user, setUser] = useState({});
   const [tab, setTab] = useState(2)
   const { userId } = useParams();
+
+  const curr = useSelector(state => state.session.user)
 
   useEffect(() => {
     if (!userId) {
@@ -29,6 +32,7 @@ function User({ notifications }) {
   if (!user) {
     return null;
   }
+
 
   let view;
   if(user.id) {
@@ -56,7 +60,7 @@ function User({ notifications }) {
   if (notifications > 0) {
     notif = <label style={{"backgroundColor": "red", "borderRadius": ".25em"}} htmlFor='slide-item-3' className='watchlist-user-tab'>
     <span onClick={handleWatchlist}>Watchlist </span>
-    <FontAwesomeIcon icon="bell" />
+      <FontAwesomeIcon icon="bell" onClick={handleWatchlist}/>
     </label>
   } else {
     notif = <label htmlFor='slide-item-3' className='watchlist-user-tab' onClick={handleWatchlist}>
