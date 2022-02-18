@@ -28,7 +28,7 @@ def post_price_data(stock):
         stockId=stock.id,
         price=stock.price,
         time=time(),
-        interval="30 Seconds"
+        interval="60 Seconds"
     )
 
     db.session.add(price_point)
