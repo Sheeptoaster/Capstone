@@ -37,7 +37,7 @@ def post_price_data(stock):
 
 def purge_price_data(stock):
     data_point = PriceHistory.query.filter(stock.id == PriceHistory.stockId).all()
-    if len(data_point) > 500:
+    if len(data_point) > 240:
         removed = PriceHistory.query.order_by(PriceHistory.id).filter(stock.id == PriceHistory.stockId).first()
         db.session.delete(removed)
         db.session.commit()
@@ -59,14 +59,14 @@ def price_change(stock):
     ## If stock's weight is less than change
     ## Stock Weight Increases + Stock Value Increase
     if stock.weight < change:
-        stock.price = (stock.price * (change * Decimal(3.5) / Decimal(100))) + stock.price
-        stock.weight = stock.weight + (stock.weight * (change / Decimal(8.5)))
+        stock.price = (stock.price * (change * Decimal(3.45) / Decimal(100))) + stock.price
+        stock.weight = stock.weight + (stock.weight * (change / Decimal(6.75)))
         db.session.commit()
     ## If Stock's weight is greater than change
     ## Stock Weight Decreases + Stock Value Decreases
     else:
-        stock.price = (stock.price * (change * Decimal(3.5) / Decimal(100) * Decimal(-1))) + stock.price
-        stock.weight = stock.weight - (stock.weight * (change / Decimal(8.5)))
+        stock.price = (stock.price * (change * Decimal(3.45) / Decimal(100) * Decimal(-1))) + stock.price
+        stock.weight = stock.weight - (stock.weight * (change / Decimal(6.75)))
         db.session.commit()
 
     ## Sends Updated Stock to Be Catalogged

@@ -9,13 +9,13 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
     const [editContentSell, setEditContentSell] = useState(false)
 
 
-    //Changes Buttons from Buy/Sell To Buy/Cancel and Turns Owned Field to Input
+    //Changes spans from Buy/Sell To Buy/Cancel and Turns Owned Field to Input
     const clickBuy = () => {
         setEditContentBuy(true)
         setEditBuy(true)
     }
 
-    //Changes Buttons from Buy/Sell To Sell/Cancel and Turns Owned Field to Input
+    //Changes spans from Buy/Sell To Sell/Cancel and Turns Owned Field to Input
     const clickSell = () => {
         setEditContentSell(true)
         setEditSell(true)
@@ -23,7 +23,7 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
 
     //Checks InputVal against prevVal to run appropriate action
     const handleBuy = async () => {
-        //Reverts Buttons to starting state and returns out
+        //Reverts spans to starting state and returns out
         if (newAmount === s.count) {
             setEditBuy(false)
             setEditContentBuy(false)
@@ -45,7 +45,7 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
     }
 
     const handleSell = async () => {
-        //Reverts Buttons to starting state and returns out
+        //Reverts spans to starting state and returns out
         if (newAmount === s.count) {
             setEditSell(false)
             setEditContentSell(false)
@@ -90,22 +90,22 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
     //Declare Btn var
     let btn;
 
-    //Checks if Edit or Sell Btn have been clicked to render new buttons to complete either action
+    //Checks if Edit or Sell Btn have been clicked to render new spans to complete either action
     if (editBuy) {
         btn = <td className="portfolio-btn-container">
-        <button className="green-btn" onClick={handleBuy}>Buy</button>
-        <button className="red-btn" onClick={handleCancel}>Cancel</button>
+        <span className="green-btn" onClick={handleBuy}>Buy</span>
+        <span className="red-btn" onClick={handleCancel}>Cancel</span>
     </td>
     } else if (editSell) {
         btn = <td className="portfolio-btn-container">
-        <button className="red-btn" onClick={handleSell}>Sell</button>
-        <button className="red-btn" onClick={handleCancel}>Cancel</button>
+        <span className="red-btn" onClick={handleSell}>Sell</span>
+        <span className="red-btn" onClick={handleCancel}>Cancel</span>
     </td>
     //Default Btn render
     } else {
         btn = <td className="portfolio-btn-container">
-                <button className="green-btn" onClick={clickBuy}>Buy</button>
-                <button className="red-btn" onClick={clickSell}>Sell</button>
+                <span className="green-btn" onClick={clickBuy}>Buy</span>
+                <span className="red-btn" onClick={clickSell}>Sell</span>
             </td>
     }
 

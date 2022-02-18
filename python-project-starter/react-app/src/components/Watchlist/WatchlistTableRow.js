@@ -6,7 +6,7 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
     const [editAlert, setEditAlert] = useState(false)
     const [conDelete, setConDelete] = useState(false)
 
-    
+
     const handleUpdate = async () => {
         if (newAmount === s.priceAlert) {
             setEditAlert(false)
@@ -51,18 +51,18 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
     let btn
     if (editAlert) {
         btn = <td className="portfolio-btn-container">
-        <button className="green-btn" onClick={handleUpdate}>Confirm</button>
-        <button className="red-btn" onClick={handleCancel}>Cancel</button>
+        <span className="green-btn" onClick={handleUpdate}>Confirm</span>
+        <span className="red-btn" onClick={handleCancel}>Cancel</span>
     </td>
     }else if (conDelete) {
         btn = <td className="portfolio-btn-container">
-        <button className="green-btn" onClick={handleDelete}>Confirm</button>
-        <button className="red-btn" onClick={handleCancel}>Cancel</button>
+        <span className="green-btn" onClick={handleDelete}>Confirm</span>
+        <span className="red-btn" onClick={handleCancel}>Cancel</span>
     </td>
     } else {
         btn = <td className="portfolio-btn-container">
-        <button className="green-btn" onClick={clickUpdate}>Update</button>
-        <button className="red-btn" onClick={clickDelete}>Remove</button>
+        <span className="green-btn" onClick={clickUpdate}>Update</span>
+        <span className="red-btn" onClick={clickDelete}>Remove</span>
     </td>
     }
 

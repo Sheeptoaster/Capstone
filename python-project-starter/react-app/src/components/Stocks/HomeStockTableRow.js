@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell, faBellSlash } from "@fortawesome/free-solid-svg-icons";
-
+import './HomeStockTableRow.css'
 
 
 library.add(faBell, faBellSlash)
@@ -13,6 +13,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     const [clickSell, setClickSell] = useState(false)
     const [watchlist, setWatchlist] = useState(false)
     const [priceAlert, setPriceAlert] = useState(0)
+    const [errors, setErrors] = useState("")
 
     const handleClickBuy = () => {
         setClickBuy(true)
@@ -28,6 +29,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         setWatchlist(false)
         setClickBuy(false)
         setClickSell(false)
+        setErrors("")
     }
 
     const handleBuy = async () => {
@@ -96,7 +98,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         }
     } else {
         if (clickBuy) {
-            owned = <td><input id='edit-owned' type="number" min={0} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
+            owned = <td ><input id='edit-owned' type="number" min={0} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
         } else {
             owned = <td>0</td>
         }
@@ -105,29 +107,29 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     let btn
     if (s.owned) {
         if (clickBuy) {
-            btn = <td>
-                <button onClick={handleBuy}>Buy</button>
-                <button onClick={handleCancel}>Cancel</button>
+            btn = <td className='portfolio-btn-container'>
+                <span className="green-btn" onClick={handleBuy}>Buy</span>
+                <span className="red-btn" onClick={handleCancel}>Cancel</span>
             </td>
         } else if (clickSell) {
-            btn = <td>
-                <button onClick={handleSell}>Sell</button>
-                <button onClick={handleCancel}>Cancel</button>
+            btn = <td className='portfolio-btn-container'>
+                <span className="red-btn" onClick={handleSell}>Sell</span>
+                <span className="red-btn" onClick={handleCancel}>Cancel</span>
             </td>
         } else {
-            btn = <td>
-                <button onClick={handleClickBuy}>Buy</button>
-                <button onClick={handleClickSell}>Sell</button>
+            btn = <td className='portfolio-btn-container'>
+                <span className="green-btn" onClick={handleClickBuy}>Buy</span>
+                <span className="red-btn" onClick={handleClickSell}>Sell</span>
             </td>
         }
     } else {
         if (clickBuy) {
-            btn = <td>
-                <button onClick={handleBuy}>Buy</button>
-                <button onClick={handleCancel}>Cancel</button>
+            btn = <td className='portfolio-btn-container'>
+                <span className="green-btn" onClick={handleBuy}>Buy</span>
+                <span className="red-btn" onClick={handleCancel}>Cancel</span>
             </td>
         } else {
-            btn = <td><button onClick={handleClickBuy}>Buy</button></td>
+            btn = <td className='portfolio-btn-container'><span className="green-btn" onClick={handleClickBuy}>Buy</span></td>
         }
     }
 
@@ -143,6 +145,10 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     }
 
     const handleEditAlert = async () => {
+        if (priceAlert === 0) {
+            setErrors("Please Enter A Value Over 0.")
+            return
+        }
         const res = await fetch(`/api/watchlists/create/${s.id}`, {
             method: "POST",
             headers: {
@@ -160,16 +166,17 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     let watched
 
     if (s.watched) {
-        watched = <td><FontAwesomeIcon icon="fa-bell" onClick={handleUnwatch} /></td>
+        watched = <td><FontAwesomeIcon icon="fa-bell" onClick={handleUnwatch} className='watchlist-bell' /></td>
     } else {
         if (watchlist) {
             watched = <td>
-                <input name="price-alert" type='number' min={0} value={priceAlert} onChange={e => setPriceAlert(e.target.value)} />
-                <button onClick={handleEditAlert}>Submit</button>
-                <button onClick={handleCancel}>Cancel</button>
+                <p className='watchlist-errors'>{errors}</p>
+                <input className='price-alert' id="edit-owned" name="price-alert"  type='number' min={0} value={priceAlert} onChange={e => setPriceAlert(e.target.value)} />
+                <span className='green-btn' onClick={handleEditAlert}>Submit</span>
+                <span className='red-btn' onClick={handleCancel}>Cancel</span>
             </td>
         } else {
-            watched = <td onClick={handleWatchClick}><FontAwesomeIcon icon="fa-bell-slash" /></td>
+            watched = <td onClick={handleWatchClick}><FontAwesomeIcon icon="fa-bell-slash" className='watchlist-bell'/></td>
         }
     }
 

@@ -1,0 +1,9 @@
+.watchlist-errors {
+    color: red;
+    font-size: .8em;
+    text-align: center;
+}
+
+.price-alert {
+    margin-bottom: 10%;
+}

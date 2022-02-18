@@ -22,7 +22,7 @@ function App() {
       const alert_res = await fetch(`/api/watchlists/alert/`)
       const data = await alert_res.json()
       setNotifications(Object.keys(data).length)
-    }, 30 * 1000)
+    }, 60 * 1000)
     // Clears Interval to Prevent Memory Leak
     return () => clearInterval(postData)
   }, [])
