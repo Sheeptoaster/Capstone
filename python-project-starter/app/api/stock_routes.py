@@ -93,7 +93,17 @@ def get_all():
         owned = Portfolio.query.filter(current_user.id == Portfolio.userId).filter(stock.id == Portfolio.stockId).first()
         history = PriceHistory.query.filter(stock.id == PriceHistory.stockId).first()
 
-        if watched == None and owned == None:
+        if watched == None and owned == None and history == None:
+            res[stock.id] = {
+                "id": stock.id,
+                "name": stock.name,
+                "ticker": stock.ticker,
+                "price": dumps(stock.price),
+                "owned": False,
+                "history": False,
+                "watched": False
+            }
+        elif watched == None and owned == None:
             res[stock.id] = {
                 "id": stock.id,
                 "name": stock.name,
@@ -185,3 +195,51 @@ def sell_stock(stockId, userId):
         db.session.delete(portfolio)
         db.session.commit()
         return "Deleted"
+
+
+@stock_routes.route('/daily-change')
+def get_top_change():
+    stocks = Stock.query.all()
+
+    res = {}
+    top = 0
+    t_stock = None
+
+    loss = 0
+    l_stock = None
+
+    for stock in stocks:
+        history = PriceHistory.query.filter(stock.id == PriceHistory.stockId).order_by(PriceHistory.id).first()
+        change = (Decimal(stock.price) - Decimal(history.price)) / Decimal(history.price) * 100
+        if top < change:
+            top = change
+            t_stock = stock
+        if loss > change:
+            loss = change
+            l_stock = stock
+
+    res['growth'] = {
+        "id": t_stock.id,
+        "growth": dumps(top)
+    }
+    res['loss'] = {
+        "id": l_stock.id,
+        "loss": dumps(loss)
+    }
+
+    return jsonify(res)
+
+
+@stock_routes.route('/growth/<int:stockId>')
+def get_top_growth(stockId):
+    history = PriceHistory.query.filter(stockId == PriceHistory.stockId).all()
+    res = []
+    count = 1
+    for s in history:
+        res.append({
+            "x": "{} Minutes Ago".format(count),
+            "y": dumps(round(s.price, 3))
+        })
+        count += 1
+
+    return jsonify(res)

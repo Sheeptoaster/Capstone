@@ -1,0 +1,5 @@
+.growth-chart-overview {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 5%;
+}

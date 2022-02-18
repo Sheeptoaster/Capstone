@@ -7,3 +7,9 @@
 .price-alert {
     margin-bottom: 10%;
 }
+
+
+.chart-1-container {
+    display: flex;
+    justify-content: center;
+}

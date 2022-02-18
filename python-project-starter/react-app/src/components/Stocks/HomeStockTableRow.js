@@ -180,12 +180,20 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         }
     }
 
+    let gains
+
+    if (s.history === false) {
+        gains = <td>N/A</td>
+    } else {
+        gains = <td>{parseFloat((s.price - s.history) / s.history * 100).toFixed(2)}%</td>
+    }
+
     return (
         <tr>
             <td>{s.name}</td>
             <td>{s.ticker}</td>
             <td>{parseFloat(s.price).toFixed(2)}</td>
-            <td>{parseFloat((s.price - s.history) / s.history * 100).toFixed(2)}%</td>
+            {gains}
             {owned}
             {btn}
             {watched}
