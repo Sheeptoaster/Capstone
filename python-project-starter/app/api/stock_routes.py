@@ -217,6 +217,8 @@ def get_top_change():
     for stock in stocks:
         history = PriceHistory.query.filter(stock.id == PriceHistory.stockId).order_by(PriceHistory.id).first()
         change = (Decimal(stock.price) - Decimal(history.price)) / Decimal(history.price) * 100
+        if history == None:
+            return jsonify(res)
         if top < change:
             top = change
             t_stock = stock
