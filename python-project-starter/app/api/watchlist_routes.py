@@ -15,6 +15,7 @@ def get_user_watchlist(userId):
         return
     for w in watchlist:
         stock = Stock.query.get(w.stockId)
+        db.session.remove()
         res[w.id] = {
             "id": w.id,
             "stockId": w.stockId,
@@ -35,11 +36,13 @@ def change_price_alert(userId, stockId):
     if request.method == "DELETE":
         db.session.delete(watched)
         db.session.commit()
+        db.session.remove()
         return "Removed"
 
     if request.method == "PUT":
         watched.priceAlert = data['amount']
         db.session.commit()
+        db.session.remove()
         return "Updated"
 
 
@@ -53,7 +56,7 @@ def get_alerts():
         stock = Stock.query.get(a.stockId)
         if a.priceAlert < stock.price:
             res[a.id] = a.to_dict()
-
+    db.session.remove()
     return jsonify(res)
 
 @watchlist_routes.route('/create/<int:stockId>', methods=["POST"])
@@ -66,4 +69,5 @@ def add_watchlist(stockId):
     )
     db.session.add(watch)
     db.session.commit()
+    db.session.remove()
     return "Added"

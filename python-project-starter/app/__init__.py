@@ -46,6 +46,9 @@ Migrate(app, db)
 # Application Security
 CORS(app)
 
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.session.remove()
 
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.

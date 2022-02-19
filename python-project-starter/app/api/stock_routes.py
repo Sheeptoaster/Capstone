@@ -58,7 +58,7 @@ def price_change(stock):
 
     ## If stock's weight is less than change
     ## Stock Weight Increases + Stock Value Increase
-    if stock.weight < change - 0.01:
+    if stock.weight < change - Decimal(0.01):
         stock.price = (stock.price * (change * Decimal(3.45) / Decimal(100))) + stock.price
         stock.weight = stock.weight + (stock.weight * (change / Decimal(6.75)))
         db.session.commit()
@@ -81,6 +81,7 @@ def price_data():
         price_change(stock)
     for stock in stocks:
         res[stock.id] = stock.to_dict()
+    db.session.remove()
     return res
 
 @stock_routes.route("/all")
@@ -143,6 +144,7 @@ def get_all():
                 "history": dumps(history.price),
                 "watched": True
             }
+    db.session.remove()
     return jsonify(res)
 
 @stock_routes.route("/buy/<int:stockId>/<int:userId>", methods=["POST", "PUT"])
@@ -163,6 +165,7 @@ def buy_stock(stockId, userId):
             )
             db.session.add(bought)
             db.session.commit()
+            db.session.remove()
             return bought.to_dict()
 
         if request.method == "PUT":
@@ -170,6 +173,7 @@ def buy_stock(stockId, userId):
             portfolio.purchasePrice = ((portfolio.count * portfolio.purchasePrice) + ((data['amount'] - portfolio.count) * stock.price)) / (data['amount'])
             portfolio.count = data['amount']
             db.session.commit()
+            db.session.remove()
             return "Purchased"
 
 
@@ -188,12 +192,14 @@ def sell_stock(stockId, userId):
         portfolio.purchasePrice = ((portfolio.count * portfolio.purchasePrice) + ((portfolio.count - data["amount"]) * stock.price)) / (portfolio.count)
         portfolio.count = data['amount']
         db.session.commit()
+        db.session.remove()
         return "Updated"
 
     if request.method == "DELETE":
         user.balance = user.balance + (stock.price * portfolio.count)
         db.session.delete(portfolio)
         db.session.commit()
+        db.session.remove()
         return "Deleted"
 
 
@@ -232,7 +238,7 @@ def get_top_change():
         "price": dumps(l_stock.price),
         "loss": dumps(loss)
     }
-
+    db.session.remove()
     return jsonify(res)
 
 

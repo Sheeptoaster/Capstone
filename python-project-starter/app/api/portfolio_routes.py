@@ -21,6 +21,7 @@ def get_user_portfolio(userId):
             "count": dumps(s.count),
             "purchasePrice": dumps(s.purchasePrice)
         }
+    db.session.remove()
     return jsonify(res)
 
 
@@ -44,7 +45,7 @@ def add_to_portfolio(stockId, userId):
 
     portfolio.count = data['amount']
     db.session.commit()
-
+    db.session.remove()
     return portfolio.to_dict()
 
 @portfolio_routes.route('/sell/<int:stockId>/<int:userId>', methods=["PUT", "DELETE"])
@@ -61,6 +62,7 @@ def sell_stock(stockId, userId):
         user.balance = user.balance + (stock.price * portfolio.count)
         db.session.delete(portfolio)
         db.session.commit()
+        db.session.remove()
         return "Stock sold"
 
     if request.method == 'PUT':
@@ -70,4 +72,5 @@ def sell_stock(stockId, userId):
         ## Updates Portfolio Owned Count
         portfolio.count = portfolio.count - (portfolio.count - data['amount'])
         db.session.commit()
+        db.session.remove()
         return portfolio.to_dict()
