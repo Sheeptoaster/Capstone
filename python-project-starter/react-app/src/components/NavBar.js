@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faEnvelope, faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
 import './Navbar.css'
 
-library.add(faBell);
+library.add(faBell, faEnvelope, faEnvelopeOpen);
 
 const NavBar = ({ notifications }) => {
   const [sidebar, setSidebar] = useState(false)
@@ -18,7 +18,7 @@ const NavBar = ({ notifications }) => {
 
   //Declare alert var
   let alert
-
+  let envelope
   //Check for amount of stocks that are under priceAlert val in Watchlist
   //Sets styling based on result
   if (notifications > 0) {
@@ -36,8 +36,28 @@ const NavBar = ({ notifications }) => {
   </li>
   }
 
+  if (notifications > 0) {
+    envelope = <div className='nav-icon-envelope-open'>
+      <NavLink to={`/p/${user.id}`}>
+        <FontAwesomeIcon icon='envelope-open' />
+      </NavLink>
+    </div>
+  } else {
+    envelope = <div className='nav-icon-envelope'>
+      <NavLink to={`/p/${user.id}`}>
+        <FontAwesomeIcon className='fas-5x' icon='envelope' />
+      </NavLink>
+    </div>
+  }
+
+
+
   return (
     <>
+    <div>
+      {envelope}
+      <h2 className='h2-nav-logo'><NavLink to={'/'}>Logo Position</NavLink></h2>
+    </div>
       <div className='navbar'>
         <NavLink to="#" className="menu-bars">
           <i className="fa-solid fa-bars" onClick={handleSidebar}></i>

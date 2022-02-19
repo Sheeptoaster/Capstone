@@ -89,3 +89,55 @@ li a:visited {
 span {
     margin-left: 16px;
 }
+
+.h2-nav-logo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: .75em;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.h2-nav-logo > a {
+    color: white;
+    text-decoration: none;
+}
+
+.h2-nav-logo > a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-icon-envelope {
+    position: absolute;
+    right: 3%;
+    top: .45em;
+    font-size: 2.5em;
+}
+
+.nav-icon-envelope > a {
+    color: white;
+}
+.nav-icon-envelope > a:visited {
+    color: white;
+}
+
+
+.nav-icon-envelope-open {
+    position: absolute;
+    right: 2.5%;
+    top: .25em;
+    font-size: 2.5em;
+    background-color: red;
+    padding: 8px;
+    border-radius: .3em;
+}
+
+.nav-icon-envelope-open > a {
+    color: white;
+}
+.nav-icon-envelope-open > a:visited {
+    color: white;
+}
