@@ -42,8 +42,8 @@ function StockOverview() {
     return (
         <>
             {showTable && <div className='growth-chart-overview'>
-                <TopGrowthChart stock={growth} />
-                <TopGrowthChart stock={loss} />
+                <TopGrowthChart stock={growth} d={"g"}/>
+                <TopGrowthChart stock={loss} d={"l"}/>
             </div>}
             <div>
                 <table>

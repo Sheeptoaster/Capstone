@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Chart as ChartJS, LineElement, PointElement, CategoryScale, LinearScale } from 'chart.js'
+import { Chart as ChartJS, LineElement, PointElement, CategoryScale, LinearScale, Tooltip } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 
 
@@ -7,11 +7,13 @@ ChartJS.register(
     CategoryScale,
     LinearScale,
     LineElement,
-    PointElement
+    PointElement,
+    Tooltip
 )
 
 
-function TopGrowthChart({ stock }) {
+
+function TopGrowthChart({ stock, d }) {
 
     const [chart, setChart] = useState([])
 
@@ -19,7 +21,6 @@ function TopGrowthChart({ stock }) {
         const fetchData = async () => {
             await fetch(`/api/stocks/growth/${stock.id}`).then(res => {
                 res.json().then((json) => {
-                    console.log(json)
                     setChart(json)
                 })
             }).catch(error => {
@@ -29,20 +30,26 @@ function TopGrowthChart({ stock }) {
         fetchData()
     }, [])
 
+
+
     const data = {
         labels: chart.map(x => x.x),
         datasets: [{
-            label: '# of Votes',
+            label: 'Price',
             data: chart.map(y => y.y),
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)'
-            ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
+                '#46AEEF',
             ],
-            borderWidth: 1
-        }]
+            pointBackgroundColor: [
+                "#293F90"
+            ],
+            pointHoverRadius: 4,
+            pointRadius: 3,
+            tension: 0.1,
+            borderWidth: 2,
+        }],
     }
+
 
     const options = {
         maintainAspectRatio: false,
@@ -52,19 +59,38 @@ function TopGrowthChart({ stock }) {
             }
         },
         legend: {
-            fontSize: 15
-        }
+            fontSize: 15,
+            boxWidth: 30,
+        },
+        responsive: true,
+    }
+
+    let banner
+    if (d === 'l') {
+        banner = <h2 className='h2-chart-decrease'>Biggest Price Drop</h2>
+    } else {
+        banner = <h2 className='h2-chart-increase'>Biggest Price Increase</h2>
     }
 
     return (
-        <div>
-            <Line
-                data={data}
-                options={options}
-                height={450}
-                width={600}
-            />
-        </div>
+        <>
+            <div className='stock-chart-container'>
+                {banner}
+                <div className='stock-chart-stock-info'>
+                    <span className='stock-chart-stock-name'>{stock.name}</span>
+                    <span className='stock-chart-stock-ticker'>{stock.ticker}</span>
+                    <span className='stock-chart-stock-price'>{parseFloat(stock.price).toFixed(2)}</span>
+                </div>
+                <div>
+                    <Line
+                        data={data}
+                        options={options}
+                        height={450}
+                        width={800}
+                    />
+                </div>
+            </div>
+        </>
     )
 }
 

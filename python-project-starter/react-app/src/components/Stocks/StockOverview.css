@@ -3,3 +3,41 @@
     justify-content: space-evenly;
     margin-top: 5%;
 }
+
+
+.stock-chart-container {
+    display: inline-block;
+}
+
+.h2-chart-increase {
+    color: green;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.h2-chart-decrease {
+    color: red;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.stock-chart-stock-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.stock-chart-stock-name {
+    font-size: x-large;
+    color: var(--dark-blue)
+}
+
+.stock-chart-stock-ticker {
+    font-size: large;
+    color: var(--brownish)
+}
+
+.stock-chart-stock-price {
+    font-size: large;
+    color: var(--brownish)
+}

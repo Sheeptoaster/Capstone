@@ -58,7 +58,7 @@ def price_change(stock):
 
     ## If stock's weight is less than change
     ## Stock Weight Increases + Stock Value Increase
-    if stock.weight < change:
+    if stock.weight < change - 0.01:
         stock.price = (stock.price * (change * Decimal(3.45) / Decimal(100))) + stock.price
         stock.weight = stock.weight + (stock.weight * (change / Decimal(6.75)))
         db.session.commit()
@@ -205,7 +205,7 @@ def get_top_change():
     top = 0
     t_stock = None
 
-    loss = 0
+    loss = 100000000000000000000000
     l_stock = None
 
     for stock in stocks:
@@ -220,10 +220,16 @@ def get_top_change():
 
     res['growth'] = {
         "id": t_stock.id,
+        "name": t_stock.name,
+        "ticker": t_stock.ticker,
+        "price": dumps(t_stock.price),
         "growth": dumps(top)
     }
     res['loss'] = {
         "id": l_stock.id,
+        "name": l_stock.name,
+        "ticker": l_stock.ticker,
+        "price": dumps(l_stock.price),
         "loss": dumps(loss)
     }
 
@@ -232,14 +238,14 @@ def get_top_change():
 
 @stock_routes.route('/growth/<int:stockId>')
 def get_top_growth(stockId):
-    history = PriceHistory.query.filter(stockId == PriceHistory.stockId).all()
+    history = PriceHistory.query.filter(stockId == PriceHistory.stockId).limit(90).all()
     res = []
-    count = 1
+    count = len(history)
     for s in history:
         res.append({
             "x": "{} Minutes Ago".format(count),
             "y": dumps(round(s.price, 3))
         })
-        count += 1
+        count -= 1
 
     return jsonify(res)
