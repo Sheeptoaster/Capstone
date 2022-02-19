@@ -219,10 +219,10 @@ def get_top_change():
         change = (Decimal(stock.price) - Decimal(history.price)) / Decimal(history.price) * 100
         if history == None:
             return jsonify(res)
-        if top < change:
+        if top <= change:
             top = change
             t_stock = stock
-        if loss > change:
+        if loss >= change:
             loss = change
             l_stock = stock
 
