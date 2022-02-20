@@ -30,10 +30,15 @@ This application can also be downloaded locally and run by:
   
   ## Technologies Used
   JavaScript
+  
   React
+  
   Flask
+  
   PostgreSQL
+  
   CSS3
+  
   SQLAlchemy
   
   ## Features
