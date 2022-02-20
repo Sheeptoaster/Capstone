@@ -9,7 +9,7 @@
 .profile-slidebar {
     font-family: arial, sans-serif;
     max-width: 600px;
-    margin: 50px auto;
+    margin: 175px auto 50px auto;
     overflow: hidden;
 }
 
@@ -59,4 +59,3 @@
 .profile-slidebar #slide-item-1:checked ~ .slider .bar{ margin-left: 0%; }
 .profile-slidebar #slide-item-2:checked ~ .slider .bar{ margin-left: 33%; }
 .profile-slidebar #slide-item-3:checked ~ .slider .bar{ margin-left: 66.8%; }
-

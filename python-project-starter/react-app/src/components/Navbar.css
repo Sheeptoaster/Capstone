@@ -13,6 +13,10 @@ li a:visited {
     display: flex;
     justify-content: start;
     align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -5;
 }
 
 .menu-bars {
@@ -91,7 +95,7 @@ span {
 }
 
 .h2-nav-logo {
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
     top: .75em;
@@ -111,7 +115,7 @@ span {
 }
 
 .nav-icon-envelope {
-    position: absolute;
+    position: fixed;
     right: 3%;
     top: .45em;
     font-size: 2.5em;
@@ -126,7 +130,7 @@ span {
 
 
 .nav-icon-envelope-open {
-    position: absolute;
+    position: fixed;
     right: 2.5%;
     top: .25em;
     font-size: 2.5em;
