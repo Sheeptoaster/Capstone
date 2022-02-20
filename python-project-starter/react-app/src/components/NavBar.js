@@ -81,19 +81,21 @@ const NavBar = ({ notifications }) => {
 
 
           <li className='nav-text' onClick={handleSidebar}>
-            <NavLink to="#">
-              <span onClick={handleSidebar}>Top Increase</span>
-            </NavLink>
+            <a href="https://github.com/Sheeptoaster/Capstone" target={"_blank"}>
+              <span onClick={handleSidebar}>Github Repo</span>
+            </a>
           </li>
 
           <li className='nav-text' onClick={handleSidebar}>
-            <NavLink to="#">
-              <span onClick={handleSidebar}>Top Decrease</span>
-            </NavLink>
+            <a href="https://www.linkedin.com/in/jacob-weber-662a08153/" target={"_blank"}>
+              <span onClick={handleSidebar}>LinkedIn</span>
+            </a>
           </li>
 
-          <li>
-            <LogoutButton onClick={handleSidebar}/>
+          <li className='nav-text logout-btn'>
+            <a href="#">
+              <LogoutButton onClick={handleSidebar}/>
+            </a>
           </li>
         </ul>
       </nav>
