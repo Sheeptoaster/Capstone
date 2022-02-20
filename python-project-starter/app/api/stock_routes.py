@@ -59,7 +59,7 @@ def price_change(stock):
     ## If stock's weight is less than change
     ## Stock Weight Increases + Stock Value Increase
     if stock.weight < change - Decimal(0.01):
-        stock.price = (stock.price * (change * Decimal(2.85) / Decimal(100))) + stock.price
+        stock.price = (stock.price * (change * Decimal(3.25) / Decimal(100))) + stock.price
         stock.weight = stock.weight + (stock.weight * (change / Decimal(6.75)))
         db.session.commit()
     ## If Stock's weight is greater than change
