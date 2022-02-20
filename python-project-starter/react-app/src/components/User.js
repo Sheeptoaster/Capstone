@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import PortfolioMain from './Portfolio/PortfolioMain';
 import './User.css'
 import Watchlist from './Watchlist/Watchlist';
+import UserDetails from './UserDetails/UserDetails';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-
 library.add(faBell);
 
 
@@ -37,7 +37,7 @@ function User({ notifications }) {
   // Allows Conditional Rendering of Components Based On Current Tab Selected
   if(user.id) {
     if (tab === 1) {
-      view = <p>PlaceHolder for User Details</p>
+      view = <UserDetails user={user} />
     } else if (tab === 3) {
       view = <Watchlist user={user} />
     } else {

@@ -1,0 +1,38 @@
+.user-card-container {
+    display: flex;
+    justify-content: center;
+}
+
+.user-card-details {
+    border: 1px solid var(--light-green);
+    border-radius: 1em;
+    background-color: var(--off-white);
+    padding: 3em 6em;
+}
+
+.user-card-h2 {
+    text-align: left;
+    font-size: 3em;
+}
+
+.user-card-h3 {
+    font-size: 2em;
+}
+
+.user-card-email {
+    font-size: 2em;
+}
+
+.user-card-balance {
+    font-size: 2em;
+}
+
+.user-card-portfolio-value {
+    font-size: 1.75em;
+}
+
+.user-transactions-h2 {
+    text-align: center;
+    margin-top: 2em;
+    font-size: 3em;
+}

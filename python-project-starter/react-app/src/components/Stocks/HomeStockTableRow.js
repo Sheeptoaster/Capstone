@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell, faBellSlash } from "@fortawesome/free-solid-svg-icons";
-import './HomeStockTableRow.css'
-
+import TopGrowthChart from './TopGrowthChart';
+import './HomeStockTableRow.css';
 
 library.add(faBell, faBellSlash)
 
@@ -13,6 +13,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     const [clickSell, setClickSell] = useState(false)
     const [watchlist, setWatchlist] = useState(false)
     const [priceAlert, setPriceAlert] = useState(0)
+    const [showChart, setShowChart] = useState(false)
     const [errors, setErrors] = useState("")
 
     const handleClickBuy = () => {
@@ -87,6 +88,10 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         setClickSell(false)
     }
 
+    const handleChart = () => {
+        setShowChart(!showChart)
+    }
+
     let owned
     if (s.owned) {
         if (clickBuy) {
@@ -94,13 +99,13 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         } else if (clickSell) {
             owned = <td><input id='edit-owned' type="number" min={0} max={s.owned} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
         } else {
-            owned = <td>{parseFloat(s.owned).toFixed(2)}</td>
+            owned = <td onClick={handleChart}>{parseFloat(s.owned).toFixed(2)}</td>
         }
     } else {
         if (clickBuy) {
             owned = <td ><input id='edit-owned' type="number" min={0} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
         } else {
-            owned = <td>0</td>
+            owned = <td onClick={handleChart}>0</td>
         }
     }
 
@@ -171,33 +176,49 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         if (watchlist) {
             watched = <td>
                 <p className='watchlist-errors'>{errors}</p>
-                <input className='price-alert' id="edit-owned" name="price-alert"  type='number' min={0} value={priceAlert} onChange={e => setPriceAlert(e.target.value)} />
+                <input className='price-alert' id="edit-owned" name="price-alert" type='number' min={0} value={priceAlert} onChange={e => setPriceAlert(e.target.value)} />
                 <span className='green-btn' onClick={handleEditAlert}>Submit</span>
                 <span className='red-btn' onClick={handleCancel}>Cancel</span>
             </td>
         } else {
-            watched = <td onClick={handleWatchClick}><FontAwesomeIcon icon="fa-bell-slash" className='watchlist-bell'/></td>
+            watched = <td onClick={handleWatchClick}><FontAwesomeIcon icon="fa-bell-slash" className='watchlist-bell' /></td>
         }
     }
 
+
     let gains
 
-    if (s.history === false) {
-        gains = <td>N/A</td>
+    if (parseFloat((s.price - s.history) / s.history * 100).toFixed(2) < 0) {
+        gains = <td id="portfolio-stock-loss" onClick={handleChart} >{parseFloat((s.price - s.history) / s.history * 100).toFixed(2)}%</td>
+    } else if (parseFloat((s.price - s.history) / s.history * 100).toFixed(2) > 0) {
+        gains = <td id="portfolio-stock-profit" onClick={handleChart} >{parseFloat((s.price - s.history) / s.history * 100).toFixed(2)}%</td>
     } else {
-        gains = <td>{parseFloat((s.price - s.history) / s.history * 100).toFixed(2)}%</td>
+        gains = <td>N/A</td>
+    }
+
+
+
+    let chart
+
+    if (showChart) {
+        chart = <tr><td colSpan={7}><TopGrowthChart stock={s} d={""} w={1325} /></td></tr>
+    } else {
+        chart = <></>
     }
 
     return (
-        <tr>
-            <td>{s.name}</td>
-            <td>{s.ticker}</td>
-            <td>{parseFloat(s.price).toFixed(2)}</td>
-            {gains}
-            {owned}
-            {btn}
-            {watched}
-        </tr>
+        <>
+            <tr>
+                <td onClick={handleChart}>{s.name}</td>
+                <td onClick={handleChart}>{s.ticker}</td>
+                <td onClick={handleChart}>{parseFloat(s.price).toFixed(2)}</td>
+                {gains}
+                {owned}
+                {btn}
+                {watched}
+            </tr>
+            {chart}
+        </>
     )
 }
 

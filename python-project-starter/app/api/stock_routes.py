@@ -8,7 +8,7 @@ from decimal import Decimal
 from flask_login import current_user
 
 from app.models import db
-from app.models import Stock, PriceHistory, Watchlist, Portfolio, User
+from app.models import Stock, PriceHistory, Watchlist, Portfolio, User, Transaction
 
 stock_routes = Blueprint("stocks", __name__)
 
@@ -37,7 +37,7 @@ def post_price_data(stock):
 
 def purge_price_data(stock):
     data_point = PriceHistory.query.filter(stock.id == PriceHistory.stockId).all()
-    if len(data_point) > 240:
+    if len(data_point) > 90:
         removed = PriceHistory.query.order_by(PriceHistory.id).filter(stock.id == PriceHistory.stockId).first()
         db.session.delete(removed)
         db.session.commit()
@@ -59,7 +59,7 @@ def price_change(stock):
     ## If stock's weight is less than change
     ## Stock Weight Increases + Stock Value Increase
     if stock.weight < change - Decimal(0.01):
-        stock.price = (stock.price * (change * Decimal(3.45) / Decimal(100))) + stock.price
+        stock.price = (stock.price * (change * Decimal(2.85) / Decimal(100))) + stock.price
         stock.weight = stock.weight + (stock.weight * (change / Decimal(6.75)))
         db.session.commit()
     ## If Stock's weight is greater than change
@@ -163,15 +163,46 @@ def buy_stock(stockId, userId):
                 count= data["amount"],
                 purchasePrice= stock.price
             )
+
+            bt = Transaction(
+                userId=userId,
+                stockId=stockId,
+                bought=True,
+                amount=data['amount'],
+                price = stock.price
+            )
+            t_count = Transaction.query.filter(userId == Transaction.userId).all()
+            if (len(t_count) > 20):
+                r = Transaction.query.order_by(Transaction.id).filter(userId == Transaction.userId).first()
+                db.session.delete(r)
+
+            db.session.add(bt)
             db.session.add(bought)
             db.session.commit()
-            db.session.remove()
             return bought.to_dict()
 
         if request.method == "PUT":
+
+            bt = Transaction(
+                userId=userId,
+                stockId=stockId,
+                bought=True,
+                amount=data['amount'] - portfolio.count,
+                price = stock.price
+            )
+            t_count = Transaction.query.filter(userId == Transaction.userId).all()
+
+            if (len(t_count) > 20):
+                r = Transaction.query.order_by(Transaction.id).filter(userId == Transaction.userId).first()
+                db.session.delete(r)
+
             user.balance = user.balance - (stock.price * (data['amount'] - (portfolio.count)))
+
             portfolio.purchasePrice = ((portfolio.count * portfolio.purchasePrice) + ((data['amount'] - portfolio.count) * stock.price)) / (data['amount'])
+
             portfolio.count = data['amount']
+
+            db.session.add(bt)
             db.session.commit()
             db.session.remove()
             return "Purchased"
@@ -188,15 +219,46 @@ def sell_stock(stockId, userId):
     portfolio = Portfolio.query.filter(stockId == Portfolio.stockId).filter(userId == Portfolio.userId).first()
 
     if request.method == "PUT":
+        st = Transaction(
+                userId=userId,
+                stockId=stockId,
+                bought=False,
+                amount=portfolio.count - data['amount'],
+                price = stock.price
+            )
+
+        t_count = Transaction.query.filter(userId == Transaction.userId).all()
+        if (len(t_count) > 20):
+            r = Transaction.query.order_by(Transaction.id).filter(userId == Transaction.userId).first()
+            db.session.delete(r)
+
         user.balance = user.balance + (stock.price * (portfolio.count - data['amount']))
+
         portfolio.purchasePrice = ((portfolio.count * portfolio.purchasePrice) + ((portfolio.count - data["amount"]) * stock.price)) / (portfolio.count)
+
         portfolio.count = data['amount']
+
+        db.session.add(st)
         db.session.commit()
         db.session.remove()
         return "Updated"
 
     if request.method == "DELETE":
+        st = Transaction(
+                userId=userId,
+                stockId=stockId,
+                bought=False,
+                amount=portfolio.count,
+                price = stock.price
+            )
+        t_count = Transaction.query.filter(userId == Transaction.userId).all()
+        if (len(t_count) > 20):
+            r = Transaction.query.order_by(Transaction.id).filter(userId == Transaction.userId).first()
+            db.session.delete(r)
+
         user.balance = user.balance + (stock.price * portfolio.count)
+
+        db.session.add(st)
         db.session.delete(portfolio)
         db.session.commit()
         db.session.remove()
@@ -257,3 +319,10 @@ def get_top_growth(stockId):
         count -= 1
 
     return jsonify(res)
+
+
+@stock_routes.route('/get/<int:stockId>')
+def get_stock_by_id(stockId):
+    stock = Stock.query.get(stockId)
+
+    return stock.to_dict()

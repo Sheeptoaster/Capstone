@@ -141,3 +141,9 @@ span {
 .nav-icon-envelope-open > a:visited {
     color: white;
 }
+
+.logout-btn {
+    position: relative;
+    justify-content: center;
+    bottom:-55%;
+}

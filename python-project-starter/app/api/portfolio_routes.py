@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from simplejson import dumps
-from app.models import db, Portfolio, Stock, User
+from app.models import db, Portfolio, Stock, User, Transaction
 
 portfolio_routes = Blueprint("portfolios", __name__)
 
@@ -43,9 +43,23 @@ def add_to_portfolio(stockId, userId):
     ## Updates User balance to reflect remaining balance after purchase
     user.balance = user.balance - stock.price * (data['amount'] - portfolio.count)
 
+    bt = Transaction(
+        userId=userId,
+        stockId=stockId,
+        bought=True,
+        amount=data['amount'] - portfolio.count,
+        price = stock.price
+    )
+
+    t_count = Transaction.query.filter(userId == Transaction.userId).all()
+    if (len(t_count) > 20):
+        r = Transaction.query.order_by(Transaction.id).filter(userId == Transaction.userId).first()
+        db.session.delete(r)
+        db.session.commit()
+
     portfolio.count = data['amount']
+    db.session.add(bt)
     db.session.commit()
-    db.session.remove()
     return portfolio.to_dict()
 
 @portfolio_routes.route('/sell/<int:stockId>/<int:userId>', methods=["PUT", "DELETE"])
@@ -60,17 +74,41 @@ def sell_stock(stockId, userId):
     if request.method == 'DELETE':
         ## Updates User Balance to Reflect Updated Balance
         user.balance = user.balance + (stock.price * portfolio.count)
+        st = Transaction(
+        userId=userId,
+        stockId=stockId,
+        bought=False,
+        amount=portfolio.count,
+        price = stock.price
+        )
+
+        t_count = Transaction.query.filter(userId == Transaction.userId).all()
+        if (len(t_count) > 20):
+            r = Transaction.query.order_by(Transaction.id).filter(userId == Transaction.userId).first()
+            db.session.delete(r)
+
+        db.session.add(st)
         db.session.delete(portfolio)
         db.session.commit()
-        db.session.remove()
         return "Stock sold"
 
     if request.method == 'PUT':
         ## Updates User Balance to Reflect Updated Balance
         user.balance = user.balance + (stock.price * (portfolio.count - data['amount']))
+        st = Transaction(
+        userId=userId,
+        stockId=stockId,
+        bought=False,
+        amount=portfolio.count - data['amount'],
+        price = stock.price
+        )
+        t_count = Transaction.query.filter(userId == Transaction.userId).all()
+        if (len(t_count) > 20):
+            r = Transaction.query.order_by(Transaction.id).filter(userId == Transaction.userId).first()
+            db.session.delete(r)
 
         ## Updates Portfolio Owned Count
         portfolio.count = portfolio.count - (portfolio.count - data['amount'])
+        db.session.add(st)
         db.session.commit()
-        db.session.remove()
         return portfolio.to_dict()

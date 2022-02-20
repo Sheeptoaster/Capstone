@@ -13,7 +13,7 @@ ChartJS.register(
 
 
 
-function TopGrowthChart({ stock, d }) {
+function TopGrowthChart({ stock, d, w }) {
 
     const [chart, setChart] = useState([])
 
@@ -68,28 +68,30 @@ function TopGrowthChart({ stock, d }) {
     let banner
     if (d === 'l') {
         banner = <h2 className='h2-chart-decrease'>Biggest Price Drop</h2>
-    } else {
+    } else if (d === "g") {
         banner = <h2 className='h2-chart-increase'>Biggest Price Increase</h2>
+    } else {
+        banner = <h2></h2>
     }
 
     return (
         <>
-            <div className='stock-chart-container'>
-                {banner}
-                <div className='stock-chart-stock-info'>
-                    <span className='stock-chart-stock-name'>{stock.name}</span>
-                    <span className='stock-chart-stock-ticker'>{stock.ticker}</span>
-                    <span className='stock-chart-stock-price'>{parseFloat(stock.price).toFixed(2)}</span>
+                <div className='stock-chart-container'>
+                    {banner}
+                    <div className='stock-chart-stock-info'>
+                        <span className='stock-chart-stock-name'>{stock.name}</span>
+                        <span className='stock-chart-stock-ticker'>{stock.ticker}</span>
+                        <span className='stock-chart-stock-price'>{parseFloat(stock.price).toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <Line
+                            data={data}
+                            options={options}
+                            height={450}
+                            width={w}
+                        />
+                    </div>
                 </div>
-                <div>
-                    <Line
-                        data={data}
-                        options={options}
-                        height={450}
-                        width={800}
-                    />
-                </div>
-            </div>
         </>
     )
 }
