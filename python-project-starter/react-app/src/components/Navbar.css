@@ -16,7 +16,7 @@ li a:visited {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: -5;
+    z-index: 2;
 }
 
 .menu-bars {
@@ -102,6 +102,7 @@ span {
     margin-left: auto;
     margin-right: auto;
     width: fit-content;
+    z-index: 3;
 }
 
 .h2-nav-logo > a {
@@ -119,6 +120,7 @@ span {
     right: 3%;
     top: .45em;
     font-size: 2.5em;
+    z-index: 3;
 }
 
 .nav-icon-envelope > a {
@@ -137,6 +139,7 @@ span {
     background-color: red;
     padding: 8px;
     border-radius: .3em;
+    z-index: 3;
 }
 
 .nav-icon-envelope-open > a {

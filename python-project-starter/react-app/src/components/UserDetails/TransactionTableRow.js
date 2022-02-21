@@ -12,10 +12,10 @@ function TransactionTableRow({ t }) {
     let price;
     if(t.bought) {
         amount = <td id='portfolio-stock-profit'>{t.amount}</td>
-        price = <td id='portfolio-stock-profit'>${parseFloat(t.price).toFixed(2)}</td>
+        price = <td id='portfolio-stock-profit'>{new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(t.price)}</td>
     } else {
         amount = <td id='portfolio-stock-loss'>{t.amount}</td>
-        price = <td id='portfolio-stock-loss'>${parseFloat(t.price).toFixed(2)}</td>
+        price = <td id='portfolio-stock-loss'>{new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(t.price)}</td>
     }
 
     return (

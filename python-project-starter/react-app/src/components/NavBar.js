@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { NavLink, Redirect } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
+import { logout } from '../store/session';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell, faEnvelope, faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ library.add(faBell, faEnvelope, faEnvelopeOpen);
 const NavBar = ({ notifications }) => {
   const [sidebar, setSidebar] = useState(false)
   const user = useSelector(state => state.session.user)
+  const dispatch = useDispatch()
   const handleSidebar = () => {
     setSidebar(!sidebar)
   }
@@ -50,6 +52,10 @@ const NavBar = ({ notifications }) => {
     </div>
   }
 
+  const onLogout = async (e) => {
+    await dispatch(logout());
+    <Redirect to="/login" />
+  };
 
 
   return (
@@ -93,9 +99,9 @@ const NavBar = ({ notifications }) => {
           </li>
 
           <li className='nav-text logout-btn'>
-            <a href="#">
+            <NavLink to="#" onClick={onLogout}>
               <LogoutButton onClick={handleSidebar}/>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </nav>

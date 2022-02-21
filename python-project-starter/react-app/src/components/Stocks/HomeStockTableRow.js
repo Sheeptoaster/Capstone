@@ -211,7 +211,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             <tr>
                 <td onClick={handleChart}>{s.name}</td>
                 <td onClick={handleChart}>{s.ticker}</td>
-                <td onClick={handleChart}>{parseFloat(s.price).toFixed(2)}</td>
+                <td onClick={handleChart}>{new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(s.price)}</td>
                 {gains}
                 {owned}
                 {btn}

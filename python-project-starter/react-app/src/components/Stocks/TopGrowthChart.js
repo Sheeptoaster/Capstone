@@ -81,7 +81,7 @@ function TopGrowthChart({ stock, d, w }) {
                     <div className='stock-chart-stock-info'>
                         <span className='stock-chart-stock-name'>{stock.name}</span>
                         <span className='stock-chart-stock-ticker'>{stock.ticker}</span>
-                        <span className='stock-chart-stock-price'>{parseFloat(stock.price).toFixed(2)}</span>
+                        <span className='stock-chart-stock-price'>{new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(stock.price)}</span>
                     </div>
                     <div>
                         <Line
