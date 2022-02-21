@@ -78,7 +78,7 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
         <tr>
             <td>{s.stockName}</td>
             <td>{s.ticker}</td>
-            <td>${parseFloat(s.currentPrice).toFixed(2)}</td>
+            <td>{new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(s.currentPrice)}</td>
             {amountField}
             {btn}
         </tr>
