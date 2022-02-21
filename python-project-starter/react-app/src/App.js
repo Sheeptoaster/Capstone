@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
-import NavBar from './components/NavBar';
+import NavAuth from './components/AuthNav';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import StockOverview from './components/Stocks/StockOverview';
 import User from './components/User';
@@ -28,14 +28,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await dispatch(authenticate());
-      const alert_res = await fetch(`/api/watchlists/alert/`)
-      const data = await alert_res.json()
-      setNotifications(Object.keys(data).length)
       setLoaded(true);
     })();
-  }, [dispatch]);
+  }, [dispatch, loaded]);
 
   if (!loaded) {
     return null;
@@ -44,7 +41,8 @@ function App() {
   return (
     <BrowserRouter>
 
-      <NavBar notifications={notifications} />
+
+      <NavAuth notifications={notifications} loaded={loaded} />
 
       <Switch>
 
@@ -57,7 +55,7 @@ function App() {
         </Route>
 
         <ProtectedRoute path='/p/:userId' exact={true} >
-          <User notifications={notifications}/>
+          <User notifications={notifications} />
         </ProtectedRoute>
 
         <ProtectedRoute path='/' exact={true} >
