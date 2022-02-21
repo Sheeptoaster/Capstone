@@ -41,6 +41,8 @@ This application can also be downloaded locally and run by:
   
   SQLAlchemy
   
+  React-ChartJS
+  
   ## Features
   
   [Will include screenshots]
