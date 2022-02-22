@@ -29,19 +29,26 @@ This application can also be downloaded locally and run by:
   8. `cd /react-app` and start the application with `npm start`
   
   ## Technologies Used
+  
+  ### Frontend Technologies
+
   JavaScript
   
   React
+
+  CSS3
   
+  React-ChartJS
+  
+  ### Backend Technologies
+
   Flask
   
   PostgreSQL
   
-  CSS3
-  
   SQLAlchemy
   
-  React-ChartJS
+  
   
   ## Features
   
