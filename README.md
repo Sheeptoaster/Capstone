@@ -52,4 +52,41 @@ This application can also be downloaded locally and run by:
   
   ## Features
   
-  [Will include screenshots]
+  ## Home Page View
+  ![image](https://user-images.githubusercontent.com/85136034/155236336-413ca288-c22f-43d1-bcca-f06f9d78a643.png)
+  
+  Chart View for Each Stock
+  ![image](https://user-images.githubusercontent.com/85136034/155237153-11bf8929-714c-43af-909d-d95a4b33c962.png)
+
+  Sidebar Navigation
+  ![image](https://user-images.githubusercontent.com/85136034/155236471-99e5b51b-3d00-4d4e-b262-ef54111ef773.png)
+  
+  Buy, Sell, and Add to Watchlist From Homepage 
+  ![image](https://user-images.githubusercontent.com/85136034/155237039-2f877404-be42-403c-a50b-340b5e0f9a8c.png)
+
+
+  ## User Page
+  
+  Portfolio View
+  ![image](https://user-images.githubusercontent.com/85136034/155237237-c1577be6-9d52-4388-acd1-32e1788eaa24.png)
+  
+  User Information Page
+  ![image](https://user-images.githubusercontent.com/85136034/155236556-b6fd4cae-aaea-4399-93ab-ddb82cd8e48f.png)
+  
+  Edit User Information Page
+  ![image](https://user-images.githubusercontent.com/85136034/155236661-37f478c4-0f0e-45e6-b3b3-3c3106d7c482.png)
+
+  Transaction List
+  ![image](https://user-images.githubusercontent.com/85136034/155236628-810f59f3-3ee0-47f5-85e2-0ceb1dd22b84.png)
+  
+  Buy and Sell From Portfolio
+  ![image](https://user-images.githubusercontent.com/85136034/155237355-57bf542b-cac6-4837-a863-4995033b8758.png)
+
+  View Watchlist and Change Alert Price Value
+  ![image](https://user-images.githubusercontent.com/85136034/155237424-0c8a8f24-cad8-4035-a6e2-b9d64d28fbd1.png)
+
+   Notifications When Stock Falls Under Alert Price
+   ![image](https://user-images.githubusercontent.com/85136034/155237502-92666315-0822-4fba-970a-5183738d2fa2.png)
+
+
+  
