@@ -13,6 +13,7 @@ library.add(faBell);
 function User({ notifications }) {
   const [user, setUser] = useState({});
   const [tab, setTab] = useState(2)
+  const [update, setUpdate] = useState(false)
   const { userId } = useParams();
 
 
@@ -24,8 +25,9 @@ function User({ notifications }) {
       const response = await fetch(`/api/users/${userId}`);
       const user = await response.json();
       setUser(user);
+      setUpdate(false)
     })();
-  }, [userId]);
+  }, [userId, update]);
 
   if (!user) {
     return null;
@@ -37,7 +39,7 @@ function User({ notifications }) {
   // Allows Conditional Rendering of Components Based On Current Tab Selected
   if(user.id) {
     if (tab === 1) {
-      view = <UserDetails user={user} />
+      view = <UserDetails user={user} setUpdate={setUpdate} />
     } else if (tab === 3) {
       view = <Watchlist user={user} />
     } else {

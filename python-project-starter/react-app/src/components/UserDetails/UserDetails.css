@@ -1,4 +1,4 @@
-.user-card-container {
+/* .user-card-container {
     display: flex;
     justify-content: center;
 }
@@ -29,10 +29,127 @@
 
 .user-card-portfolio-value {
     font-size: 1.75em;
-}
+} */
 
 .user-transactions-h2 {
     text-align: center;
     margin-top: 2em;
     font-size: 3em;
+}
+
+.user-card-container {
+    display: flex;
+    justify-content: center;
+}
+
+.user-card-details {
+    box-sizing: border-box;
+    display: flex;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
+        0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    background-color: var(--off-white);
+    margin: 1rem;
+    position: relative;
+    width: 45em;
+    height: 20em;
+}
+
+.user-edit-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+
+.user-card-h2 {
+    font-size: 2.2em;
+}
+
+.user-card-h3 {
+    font-size: 1.8em;
+    margin-top: .5em;
+}
+
+.user-card-money {
+    display: flex;
+    justify-content: space-evenly;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.25em;
+}
+
+.user-edit-btn {
+    margin-right: 1em;
+    display: block;
+    padding: 1em;
+    width: 20%;
+    background: linear-gradient( to right, var(--dark-blue), var(--light-blue));
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: .75em;
+    font-weight: 600;
+    margin-top: 1em;
+    text-shadow: 0 1px 0 rgba(black, .2);
+}
+
+.user-card-names {
+    margin-left: 2em;
+    margin-top: 1.5em;
+}
+
+.user-card-balance {
+    margin-left: .5em;
+    margin-right: .5em;
+}
+
+.user-balance-box {
+    margin-right: .5em;
+    border: 1px solid black;
+    padding: .1em .65em;
+    border-radius: .2em;
+    background-color: white;
+}
+
+
+.user-edit-form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.user-edit-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.user-edit-btn-active {
+    margin-right: 2em;
+    display: block;
+    padding: 1em;
+    width: 100%;
+    background: linear-gradient( to right, var(--dark-blue), var(--light-blue));
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: .75em;
+    font-weight: 600;
+    margin-top: 1em;
+    text-shadow: 0 1px 0 rgba(black, .2);
+}
+
+.user-edit-btn-container {
+    margin-right: 1em;
+}
+
+.user-edit-input {
+    padding: .2em;
+    border: .25em;
+    margin-top: .25em;
+}
+
+.user-edit-container > label {
+    margin-top: .3em;
 }

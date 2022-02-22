@@ -54,7 +54,7 @@ def get_alerts():
 
     for a in alert:
         stock = Stock.query.get(a.stockId)
-        if a.priceAlert < stock.price:
+        if a.priceAlert > stock.price:
             res[a.id] = a.to_dict()
     db.session.remove()
     return jsonify(res)

@@ -1,209 +1,381 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell, faBellSlash } from "@fortawesome/free-solid-svg-icons";
-import TopGrowthChart from './TopGrowthChart';
-import './HomeStockTableRow.css';
+import TopGrowthChart from "./TopGrowthChart";
+import "./HomeStockTableRow.css";
 
-library.add(faBell, faBellSlash)
+library.add(faBell, faBellSlash);
 
 function HomeStockTableRow({ s, setUpdate, user }) {
-    const [newAmount, setNewAmount] = useState(s.owned || 0)
-    const [clickBuy, setClickBuy] = useState(false)
-    const [clickSell, setClickSell] = useState(false)
-    const [watchlist, setWatchlist] = useState(false)
-    const [priceAlert, setPriceAlert] = useState(0)
-    const [showChart, setShowChart] = useState(false)
-    const [errors, setErrors] = useState("")
+    const [newAmount, setNewAmount] = useState(s.owned || 0);
+    const [userBalance, setUserBalance] = useState(user.balance);
+    const [newBalance, setNewBalance] = useState(userBalance);
+    const [clickBuy, setClickBuy] = useState(false);
+    const [clickSell, setClickSell] = useState(false);
+    const [watchlist, setWatchlist] = useState(false);
+    const [priceAlert, setPriceAlert] = useState(
+        parseFloat(s.price).toFixed(0)
+    );
+    const [showChart, setShowChart] = useState(false);
+    const [errors, setErrors] = useState("");
 
     const handleClickBuy = () => {
-        setClickBuy(true)
-    }
+        setClickBuy(true);
+    };
 
     const handleClickSell = () => {
-        setClickSell(true)
-    }
+        setClickSell(true);
+    };
 
     const handleCancel = () => {
-        setNewAmount(s.owned || 0)
-        setPriceAlert(0)
-        setWatchlist(false)
-        setClickBuy(false)
-        setClickSell(false)
-        setErrors("")
-    }
+        setNewAmount(s.owned || 0);
+        setPriceAlert(parseFloat(s.price).toFixed(0));
+        setNewBalance(userBalance);
+        setWatchlist(false);
+        setClickBuy(false);
+        setClickSell(false);
+        setErrors("");
+    };
 
     const handleBuy = async () => {
         if (newAmount === s.owned || newAmount === 0) {
-            setClickBuy(false)
-            return
+            setClickBuy(false);
+            return;
         }
+
+        if (newAmount * s.price > user.balance) {
+            setErrors("Insufficient Balance. Please Select a New Amount.");
+            return;
+        }
+
         if (s.owned > 0) {
             const res = await fetch(`/api/stocks/buy/${s.id}/${user.id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "amount": parseFloat(newAmount)
-                })
-            })
+                    amount: parseFloat(newAmount),
+                }),
+            });
         } else {
             const res = await fetch(`/api/stocks/buy/${s.id}/${user.id}`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "amount": parseFloat(newAmount)
-                })
-            })
+                    amount: parseFloat(newAmount),
+                }),
+            });
         }
-        setUpdate(true)
-        setClickBuy(false)
-    }
+        setUpdate(true);
+        setClickBuy(false);
+    };
 
     const handleSell = async () => {
         if (newAmount === s.owned) {
-            setClickSell(false)
-            return
+            setClickSell(false);
+            return;
         }
 
         if (newAmount == 0) {
             const res = await fetch(`/api/stocks/sell/${s.id}/${user.id}`, {
-                method: "DELETE"
-            })
+                method: "DELETE",
+            });
         } else {
             const res = await fetch(`/api/stocks/sell/${s.id}/${user.id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "amount": parseFloat(newAmount)
-                })
-            })
+                    amount: parseFloat(newAmount),
+                }),
+            });
         }
-        setUpdate(true)
-        setClickSell(false)
-    }
+        setUpdate(true);
+        setClickSell(false);
+    };
 
     const handleChart = () => {
-        setShowChart(!showChart)
-    }
+        setShowChart(!showChart);
+    };
 
-    let owned
+    let owned;
     if (s.owned) {
         if (clickBuy) {
-            owned = <td><input id='edit-owned' type="number" min={s.owned} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
+            owned = (
+                <td>
+                    <p className="watchlist-errors">{errors}</p>
+                    <input
+                        id="edit-owned"
+                        type="number"
+                        min={s.owned}
+                        name="amount"
+                        value={newAmount}
+                        onChange={(e) => {
+                            setNewAmount(e.target.value);
+                            setNewBalance(
+                                user.balance -
+                                    (e.target.value - s.owned) * s.price
+                            );
+                        }}
+                    />
+                    <p className="new-balance">New Balance: </p>
+                    <span className="stock-buy-balance">
+                        {new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                        }).format(newBalance)}
+                    </span>
+                </td>
+            );
         } else if (clickSell) {
-            owned = <td><input id='edit-owned' type="number" min={0} max={s.owned} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
+            owned = (
+                <td>
+                    <input
+                        id="edit-owned"
+                        type="number"
+                        min={0}
+                        max={s.owned}
+                        name="amount"
+                        value={newAmount}
+                        onChange={(e) => {
+                            setNewAmount(e.target.value);
+                            setNewBalance(
+                                Number(user.balance) +
+                                    (Number(s.owned) - Number(e.target.value)) *
+                                        Number(s.price)
+                            );
+                        }}
+                    />
+                    <div className="new-balance-container">
+                        <p className="new-balance">New Balance: </p>
+                        <span className="stock-sell-balance">
+                            {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                            }).format(newBalance)}
+                        </span>
+                    </div>
+                </td>
+            );
         } else {
-            owned = <td onClick={handleChart}>{parseFloat(s.owned).toFixed(2)}</td>
+            owned = (
+                <td onClick={handleChart}>{parseFloat(s.owned).toFixed(2)}</td>
+            );
         }
     } else {
         if (clickBuy) {
-            owned = <td ><input id='edit-owned' type="number" min={0} name="amount" value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
+            owned = (
+                <td>
+                    <p className="watchlist-errors">{errors}</p>
+                    <input
+                        id="edit-owned"
+                        type="number"
+                        min={0}
+                        name="amount"
+                        value={newAmount}
+                        onChange={(e) => {
+                            setNewAmount(e.target.value);
+                            setUserBalance(
+                                user.balance - e.target.value * s.price
+                            );
+                        }}
+                    />
+                    <p className="new-balance">New Balance: </p>
+                    <span className="stock-buy-balance">
+                        {new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                        }).format(userBalance)}
+                    </span>
+                </td>
+            );
         } else {
-            owned = <td onClick={handleChart}>0</td>
+            owned = <td onClick={handleChart}>0</td>;
         }
     }
 
-    let btn
+    let btn;
     if (s.owned) {
         if (clickBuy) {
-            btn = <td className='portfolio-btn-container'>
-                <span className="green-btn" onClick={handleBuy}>Buy</span>
-                <span className="red-btn" onClick={handleCancel}>Cancel</span>
-            </td>
+            btn = (
+                <td className="portfolio-btn-container">
+                    <span className="green-btn" onClick={handleBuy}>
+                        Buy
+                    </span>
+                    <span className="red-btn" onClick={handleCancel}>
+                        Cancel
+                    </span>
+                </td>
+            );
         } else if (clickSell) {
-            btn = <td className='portfolio-btn-container'>
-                <span className="red-btn" onClick={handleSell}>Sell</span>
-                <span className="red-btn" onClick={handleCancel}>Cancel</span>
-            </td>
+            btn = (
+                <td className="portfolio-btn-container">
+                    <span className="red-btn" onClick={handleSell}>
+                        Sell
+                    </span>
+                    <span className="red-btn" onClick={handleCancel}>
+                        Cancel
+                    </span>
+                </td>
+            );
         } else {
-            btn = <td className='portfolio-btn-container'>
-                <span className="green-btn" onClick={handleClickBuy}>Buy</span>
-                <span className="red-btn" onClick={handleClickSell}>Sell</span>
-            </td>
+            btn = (
+                <td className="portfolio-btn-container">
+                    <span className="green-btn" onClick={handleClickBuy}>
+                        Buy
+                    </span>
+                    <span className="red-btn" onClick={handleClickSell}>
+                        Sell
+                    </span>
+                </td>
+            );
         }
     } else {
         if (clickBuy) {
-            btn = <td className='portfolio-btn-container'>
-                <span className="green-btn" onClick={handleBuy}>Buy</span>
-                <span className="red-btn" onClick={handleCancel}>Cancel</span>
-            </td>
+            btn = (
+                <td className="portfolio-btn-container">
+                    <span className="green-btn" onClick={handleBuy}>
+                        Buy
+                    </span>
+                    <span className="red-btn" onClick={handleCancel}>
+                        Cancel
+                    </span>
+                </td>
+            );
         } else {
-            btn = <td className='portfolio-btn-container'><span className="green-btn" onClick={handleClickBuy}>Buy</span></td>
+            btn = (
+                <td className="portfolio-btn-container">
+                    <span className="green-btn" onClick={handleClickBuy}>
+                        Buy
+                    </span>
+                </td>
+            );
         }
     }
 
     const handleWatchClick = () => {
-        setWatchlist(true)
-    }
+        setWatchlist(true);
+    };
     const handleUnwatch = async () => {
         const res = await fetch(`/api/watchlists/change/${s.id}/${user.id}`, {
-            method: "DELETE"
-        })
-        setPriceAlert(0)
-        setUpdate(true)
-    }
+            method: "DELETE",
+        });
+        setPriceAlert(0);
+        setUpdate(true);
+    };
 
     const handleEditAlert = async () => {
         if (priceAlert === 0) {
-            setErrors("Please Enter A Value Over 0.")
-            return
+            setErrors("Please Enter A Value Over 0.");
+            return;
         }
         const res = await fetch(`/api/watchlists/create/${s.id}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "alert": parseFloat(priceAlert)
-            })
-        })
+                alert: parseFloat(priceAlert),
+            }),
+        });
 
-        setUpdate(true)
-        setWatchlist(false)
-    }
+        setUpdate(true);
+        setWatchlist(false);
+    };
 
-    let watched
+    let watched;
 
     if (s.watched) {
-        watched = <td><FontAwesomeIcon icon="fa-bell" onClick={handleUnwatch} className='watchlist-bell' /></td>
+        watched = (
+            <td>
+                <FontAwesomeIcon
+                    icon="fa-bell"
+                    onClick={handleUnwatch}
+                    className="watchlist-bell"
+                />
+            </td>
+        );
     } else {
         if (watchlist) {
-            watched = <td>
-                <p className='watchlist-errors'>{errors}</p>
-                <input className='price-alert' id="edit-owned" name="price-alert" type='number' min={0} value={priceAlert} onChange={e => setPriceAlert(e.target.value)} />
-                <span className='green-btn' onClick={handleEditAlert}>Submit</span>
-                <span className='red-btn' onClick={handleCancel}>Cancel</span>
-            </td>
+            watched = (
+                <td>
+                    <p className="watchlist-errors">{errors}</p>
+                    <span className="watchlist-price-alert-text">
+                        Set Price Drop Alert
+                    </span>
+                    <input
+                        className="price-alert"
+                        id="edit-owned"
+                        name="price-alert"
+                        type="number"
+                        min={0}
+                        value={priceAlert - 1}
+                        max={s.price}
+                        onChange={(e) => setPriceAlert(e.target.value)}
+                    />
+                    <span className="green-btn" onClick={handleEditAlert}>
+                        Submit
+                    </span>
+                    <span className="red-btn" onClick={handleCancel}>
+                        Cancel
+                    </span>
+                </td>
+            );
         } else {
-            watched = <td onClick={handleWatchClick}><FontAwesomeIcon icon="fa-bell-slash" className='watchlist-bell' /></td>
+            watched = (
+                <td onClick={handleWatchClick}>
+                    <FontAwesomeIcon
+                        icon="fa-bell-slash"
+                        className="watchlist-bell"
+                    />
+                </td>
+            );
         }
     }
 
+    let gains;
 
-    let gains
-
-    if (parseFloat((s.price - s.history) / s.history * 100).toFixed(2) < 0) {
-        gains = <td id="portfolio-stock-loss" onClick={handleChart} >{parseFloat((s.price - s.history) / s.history * 100).toFixed(2)}%</td>
-    } else if (parseFloat((s.price - s.history) / s.history * 100).toFixed(2) > 0) {
-        gains = <td id="portfolio-stock-profit" onClick={handleChart} >{parseFloat((s.price - s.history) / s.history * 100).toFixed(2)}%</td>
+    if (parseFloat(((s.price - s.history) / s.history) * 100).toFixed(2) < 0) {
+        gains = (
+            <td id="portfolio-stock-loss" onClick={handleChart}>
+                {parseFloat(((s.price - s.history) / s.history) * 100).toFixed(
+                    2
+                )}
+                %
+            </td>
+        );
+    } else if (
+        parseFloat(((s.price - s.history) / s.history) * 100).toFixed(2) >= 0
+    ) {
+        gains = (
+            <td id="portfolio-stock-profit" onClick={handleChart}>
+                {parseFloat(((s.price - s.history) / s.history) * 100).toFixed(
+                    2
+                )}
+                %
+            </td>
+        );
     } else {
-        gains = <td>N/A</td>
+        gains = <td>0%</td>;
     }
 
-
-
-    let chart
+    let chart;
 
     if (showChart) {
-        chart = <tr><td colSpan={7}><TopGrowthChart stock={s} d={""} w={1325} /></td></tr>
+        chart = (
+            <tr>
+                <td colSpan={7}>
+                    <TopGrowthChart stock={s} d={""} w={1325} />
+                </td>
+            </tr>
+        );
     } else {
-        chart = <></>
+        chart = <></>;
     }
 
     return (
@@ -211,7 +383,12 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             <tr>
                 <td onClick={handleChart}>{s.name}</td>
                 <td onClick={handleChart}>{s.ticker}</td>
-                <td onClick={handleChart}>{new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(s.price)}</td>
+                <td onClick={handleChart}>
+                    {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                    }).format(s.price)}
+                </td>
                 {gains}
                 {owned}
                 {btn}
@@ -219,7 +396,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             </tr>
             {chart}
         </>
-    )
+    );
 }
 
-export default HomeStockTableRow
+export default HomeStockTableRow;
