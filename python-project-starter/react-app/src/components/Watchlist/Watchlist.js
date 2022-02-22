@@ -1,20 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import WatchlistTableRow from './WatchlistTableRow'
 
 function Watchlist({ user }) {
     const [stock, setStock] = useState([])
     const [update, setUpdate] = useState(false)
+    const isMounted = useRef(false)
+
+    useEffect(() => {
+        return () => isMounted.current = true
+    }, [])
 
     useEffect(async () => {
         const watch_res = await fetch(`/api/watchlists/${user.id}`)
         const data = await watch_res.json()
         setStock(data)
-        const update = setInterval(async () => {
-            const watch_res = await fetch(`/api/watchlists/${user.id}`)
-            const data = await watch_res.json()
-            setStock(data)
-        }, 30 * 1000)
-        return () => clearInterval(update)
+        if (isMounted) {
+            const update = setInterval(async () => {
+                const watch_res = await fetch(`/api/watchlists/${user.id}`)
+                const data = await watch_res.json()
+                if (isMounted.current) return;
+                setStock(data)
+            }, 30 * 1000)
+            return () => clearInterval(update)
+        }
     }, [])
 
     useEffect(async () => {
@@ -38,7 +46,7 @@ function Watchlist({ user }) {
                 </thead>
                 {Object.values(stock)?.map(s => (
                     <tbody key={s.id}>
-                        <WatchlistTableRow s={s} setUpdate={setUpdate} user={user}/>
+                        <WatchlistTableRow s={s} setUpdate={setUpdate} user={user} />
                     </tbody>
                 ))}
             </table>

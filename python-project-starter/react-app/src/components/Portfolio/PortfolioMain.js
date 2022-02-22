@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PortfolioTableRow from "./PortfolioTableRow";
 
 
 const PortfolioMain = ({ user }) => {
     const [stock, setStock] = useState([])
     const [update, setUpdate] = useState(false)
+    const isMounted = useRef(false)
+
+    useEffect(() => {
+        return () => isMounted.current = true
+    }, [])
+
 
     useEffect(async () => {
         const port_res = await fetch(`/api/portfolios/${user.id}`)
         const data = await port_res.json()
         setStock(data)
         // Function to Fetch Updated Price Information Every n Seconds
-        const update = setInterval(async () => {
-            const port_res = await fetch(`/api/portfolios/${user.id}`)
-            const data = await port_res.json()
-            setStock(data)
-        }, 5 * 1000)
-        // Clears Interval to Prevent Memory Leak
-        return () => clearInterval(update)
+        if (isMounted) {
+            const update = setInterval(async () => {
+                const port_res = await fetch(`/api/portfolios/${user.id}`)
+                const data = await port_res.json()
+                if (isMounted.current) return
+                setStock(data)
+            }, 5 * 1000)
+            // Clears Interval to Prevent Memory Leak
+            return () => clearInterval(update)
+        }
     }, [])
 
     useEffect(async () => {
@@ -25,7 +34,7 @@ const PortfolioMain = ({ user }) => {
         const port_res = await fetch(`/api/portfolios/${user.id}`)
         const data = await port_res.json()
         setStock(data)
-        
+
         //Set Update to False Allow Conditional Calls in Same Component to Continue to Work
         setUpdate(false)
     }, [update])
@@ -46,7 +55,7 @@ const PortfolioMain = ({ user }) => {
                 </thead>
                 {Object.values(stock)?.map(s => (
                     <tbody key={s.id}>
-                        <PortfolioTableRow s={s} setUpdate={setUpdate} user={user}/>
+                        <PortfolioTableRow s={s} setUpdate={setUpdate} user={user} />
                     </tbody>
                 ))}
             </table>

@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { login } from '../../store/session';
-import DemoLogin from './DemoUser';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { login } from "../../store/session";
+import DemoLogin from "./DemoUser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import "./LoginForm.css";
 
-const LoginForm = () => {
+library.add(faUser, faLock);
+
+const LoginForm = ({ setTab }) => {
   const [errors, setErrors] = useState([]);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const user = useSelector(state => state.session.user);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
   const onLogin = async (e) => {
@@ -28,40 +34,65 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/' />;
+    return <Redirect to="/" />;
   }
 
   return (
     <>
-      <form onSubmit={onLogin}>
-        <div>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
-        </div>
-        <div>
-          <label htmlFor='email'>Email</label>
-          <input
-            name='email'
-            type='text'
-            placeholder='Email'
-            value={email}
-            onChange={updateEmail}
-          />
-        </div>
-        <div>
-          <label htmlFor='password'>Password</label>
-          <input
-            name='password'
-            type='password'
-            placeholder='Password'
-            value={password}
-            onChange={updatePassword}
-          />
-          <button type='submit'>Login</button>
-        </div>
-      </form>
-      <DemoLogin />
+      <div className="login-form-container">
+        <form onSubmit={onLogin} className="login-form">
+          <div className="login-container-tab">
+            <div className="login-tab-active" onClick={e => setTab(0)}>
+              <h2>Login</h2>
+            </div>
+
+            <div className="login-tab" onClick={e => setTab(1)}>
+              <h2>Signup</h2>
+            </div>
+          </div>
+          <div className="login-form-errors-container">
+            {errors.map((error, ind) => (
+              <div key={ind} className="login-form-errors">
+                {error}
+              </div>
+            ))}
+          </div>
+          <div className="form-container">
+            <label className="login-label" htmlFor="email">
+              <FontAwesomeIcon icon="user" />
+            </label>
+            <input
+              className="form-input"
+              name="email"
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={updateEmail}
+            />
+          </div>
+
+          <div className="form-container">
+            <label htmlFor="password" className="login-label">
+              <FontAwesomeIcon icon="lock" />
+            </label>
+            <input
+              className="form-input"
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={updatePassword}
+            />
+          </div>
+
+          <div className="form-btn-container">
+            <button className="form-submit-btn" type="submit">
+              Login
+            </button>
+            <DemoLogin />
+          </div>
+        </form>
+      </div>
     </>
   );
 };

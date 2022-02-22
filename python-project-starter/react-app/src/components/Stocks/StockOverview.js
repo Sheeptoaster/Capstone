@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import HomeStockTableRow from './HomeStockTableRow'
 import TopGrowthChart from './TopGrowthChart'
@@ -12,18 +12,26 @@ function StockOverview() {
     const [growth, setGrowth] = useState([])
     const [loss, setLoss] = useState([])
     const [showTable, setShowTable] = useState(false)
+    const isMounted = useRef(false)
+
+    useEffect(() => {
+        return () => isMounted.current = true
+    }, [])
 
     useEffect(async () => {
-        const updateData = setInterval(async () => {
-            const res = await fetch("/api/stocks/all")
-            const data = await res.json()
-            const change_res = await fetch('/api/stocks/daily-change')
-            const change_data = await change_res.json()
-            setGrowth(change_data['growth'])
-            setLoss(change_data['loss'])
-            setStocks(data)
-        }, 30 * 1000)
-        return () => clearInterval(updateData)
+        if (isMounted) {
+            const updateData = setInterval(async () => {
+                const res = await fetch("/api/stocks/all")
+                const data = await res.json()
+                const change_res = await fetch('/api/stocks/daily-change')
+                const change_data = await change_res.json()
+                if (isMounted.current) return;
+                setGrowth(change_data['growth'])
+                setLoss(change_data['loss'])
+                setStocks(data)
+            }, 30 * 1000)
+            return () => clearInterval(updateData)
+        }
     }, [])
 
     useEffect(async () => {
@@ -42,8 +50,8 @@ function StockOverview() {
     return (
         <>
             {showTable && <div className='growth-chart-overview'>
-                <TopGrowthChart stock={growth} d={"g"} w={800}/>
-                <TopGrowthChart stock={loss} d={"l"}  w={800}/>
+                <TopGrowthChart stock={growth} d={"g"} w={800} />
+                <TopGrowthChart stock={loss} d={"l"} w={800} />
             </div>}
             <div>
                 <table>
