@@ -8,6 +8,7 @@ const LogoutButton = () => {
   const onLogout = async (e) => {
     await dispatch(logout());
     <Redirect to="/login" />
+    window.location.reload()
   };
 
   return <span onClick={onLogout}>Logout</span>;
