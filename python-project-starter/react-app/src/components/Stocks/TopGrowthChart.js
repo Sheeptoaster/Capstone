@@ -24,7 +24,7 @@ function TopGrowthChart({ stock, d, w }) {
                     setChart(json)
                 })
             }).catch(error => {
-                console.log(error)
+                console.error(error)
             })
         }
         fetchData()

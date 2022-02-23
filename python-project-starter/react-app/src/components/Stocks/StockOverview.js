@@ -29,6 +29,7 @@ function StockOverview() {
                 setLoss(change_data['loss'])
                 setStocks(data)
             }, 30 * 1000)
+            if (!user) return () => clearInterval(updateData)
             return () => clearInterval(updateData)
     }, [])
 

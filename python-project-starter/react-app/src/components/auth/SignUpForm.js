@@ -75,7 +75,7 @@ const SignUpForm = ({ setTab }) => {
    if (user) {
       return <Redirect to="/" />;
    }
-   console.log(errors);
+   
    return (
       <>
          <div className="login-form-container">

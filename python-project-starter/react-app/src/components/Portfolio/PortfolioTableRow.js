@@ -199,8 +199,6 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
                value={newAmount}
                onChange={(e) => {
                   setNewAmount(e.target.value);
-                  console.log(user.balance, e.target.value, s)
-                  console.log(user.balance - (e.target.value - s.count) * s.currentPrice)
                   setNewBalance(
                      Number(user.balance) - (((Number(e.target.value) - Number(s.count))) * Number(s.purchasePrice))
                   );
