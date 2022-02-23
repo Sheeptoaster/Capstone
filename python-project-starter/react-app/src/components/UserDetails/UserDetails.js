@@ -10,7 +10,7 @@ function UserDetails({ user, setUpdate }) {
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
     const [email, setEmail] = useState(user.email);
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState([]);
 
     const current = useSelector((state) => state.session.user);
 
@@ -28,7 +28,7 @@ function UserDetails({ user, setUpdate }) {
 
     const handleCancel = () => {
         setEdit(false);
-        setErrors([])
+        setErrors([]);
         setEmail(user.email);
         setFirstName(user.firstName);
         setLastName(user.lastName);
@@ -44,22 +44,22 @@ function UserDetails({ user, setUpdate }) {
         const res = await fetch(`/api/users/edit/${user.id}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "username": username,
-                "firstName": firstName,
-                "lastName": lastName,
-                "email": email
-            })
-        })
+                username: username,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+            }),
+        });
         if (res.ok) {
-            setEdit(false)
-            setUpdate(true)
+            setEdit(false);
+            setUpdate(true);
         } else if (res.status < 500) {
-            const data = await res.json()
+            const data = await res.json();
             if (data.errors) {
-                setErrors(data.errors)
+                setErrors(data.errors);
             }
         }
     };
@@ -70,10 +70,16 @@ function UserDetails({ user, setUpdate }) {
         if (edit) {
             editBtn = (
                 <div className="user-edit-btn-container">
-                    <button onClick={handleSubmit} className="user-edit-btn-active">
+                    <button
+                        onClick={handleSubmit}
+                        className="user-edit-btn-active"
+                    >
                         Submit
                     </button>
-                    <button onClick={handleCancel} className="user-edit-btn-active">
+                    <button
+                        onClick={handleCancel}
+                        className="user-edit-btn-active"
+                    >
                         Cancel
                     </button>
                 </div>
@@ -92,7 +98,7 @@ function UserDetails({ user, setUpdate }) {
     let userDetails;
     if (edit) {
         userDetails = (
-            <div className="user-card-names" style={{"marginBottom": "2em"}}>
+            <div className="user-card-names" style={{ marginBottom: "2em" }}>
                 <div className="login-form-errors-container">
                     {errors?.map((error, ind) => (
                         <div key={ind} className="login-form-errors">
@@ -102,38 +108,46 @@ function UserDetails({ user, setUpdate }) {
                 </div>
                 <form className="user-edit-form">
                     <div className="user-edit-container">
-                        <label>Username</label>
-                        <input
-                            className="user-edit-input"
-                            name="username"
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <label>First Name</label>
-                        <input
-                            className="user-edit-input"
-                            name="firstName"
-                            type="text"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                        />
-                        <label>Last Name</label>
-                        <input
-                            className="user-edit-input"
-                            name="lastName"
-                            type="text"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                        />
-                        <label>Email</label>
-                        <input
-                            className="user-edit-input"
-                            name="email"
-                            type="text"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                        <div className="user-edit-fields">
+                            <label>Username</label>
+                            <input
+                                className="user-edit-input"
+                                name="username"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
+                        <div className="user-edit-fields">
+                            <label>First Name</label>
+                            <input
+                                className="user-edit-input"
+                                name="firstName"
+                                type="text"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
+                        </div>
+                        <div className="user-edit-fields">
+                            <label>Last Name</label>
+                            <input
+                                className="user-edit-input"
+                                name="lastName"
+                                type="text"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                            />
+                        </div>
+                        <div className="user-edit-fields">
+                            <label>Email</label>
+                            <input
+                                className="user-edit-input"
+                                name="email"
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
                     </div>
                     {editBtn}
                 </form>
@@ -141,16 +155,14 @@ function UserDetails({ user, setUpdate }) {
         );
     } else {
         userDetails = (
-            <div className="user-card-names" style={{"marginBottom": "5em"}}>
+            <div className="user-card-names" style={{ marginBottom: "5em" }}>
                 <div className="user-edit-row">
                     <h3 className="user-card-h2">
                         {user.firstName} {user.lastName}
                     </h3>
                     {editBtn}
                 </div>
-                <span className="user-card-h3">
-                    @{user.username}
-                    </span>
+                <span className="user-card-h3">@{user.username}</span>
             </div>
         );
     }

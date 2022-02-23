@@ -1,36 +1,3 @@
-/* .user-card-container {
-    display: flex;
-    justify-content: center;
-}
-
-.user-card-details {
-    border: 1px solid var(--light-green);
-    border-radius: 1em;
-    background-color: var(--off-white);
-    padding: 3em 6em;
-}
-
-.user-card-h2 {
-    text-align: left;
-    font-size: 3em;
-}
-
-.user-card-h3 {
-    font-size: 2em;
-}
-
-.user-card-email {
-    font-size: 2em;
-}
-
-.user-card-balance {
-    font-size: 2em;
-}
-
-.user-card-portfolio-value {
-    font-size: 1.75em;
-} */
-
 .user-transactions-h2 {
     text-align: center;
     margin-top: 2em;
@@ -61,7 +28,12 @@
     width: 100%;
 }
 
-
+.user-edit-fields {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1em;
+}
 
 .user-card-h2 {
     font-size: 2.2em;
@@ -147,9 +119,11 @@
 .user-edit-input {
     padding: .2em;
     border: .25em;
-    margin-top: .25em;
+    margin-left: 2em;
 }
 
-.user-edit-container > label {
-    margin-top: .3em;
+.user-edit-fields > label {
+    font-size: 1.1em;
+    color: var(--brownish);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
