@@ -25,11 +25,11 @@ function StockOverview() {
                 const change_res = await fetch('/api/stocks/daily-change')
                 const change_data = await change_res.json()
                 if (isMounted.current) return;
+                if (!user) return () => clearInterval(updateData)
                 setGrowth(change_data['growth'])
                 setLoss(change_data['loss'])
                 setStocks(data)
             }, 30 * 1000)
-            if (!user) return () => clearInterval(updateData)
             return () => clearInterval(updateData)
     }, [])
 
