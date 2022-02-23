@@ -15,3 +15,21 @@ from flask import jsonify
 # else:
 #     print("PRICE D", price * (change * Decimal(3.5) / Decimal(100) * Decimal(-1)) + price)
 #     print("WEIGHT", weight - (weight * (change / Decimal(13.5))))
+
+# const roomId = useParams()
+# let view = <></>
+
+# useEffect(async() => {
+#     const user = useState(state => state.session.user)
+#         if (user) {
+#             dispatch(getRooms(user.id))
+#             const rooms = useState(state => state.user.rooms)
+#             if rooms.id === user.id {
+#                 view = <Room Component />
+#             } else {
+#                 view = <Home Component />
+#             }
+#         } else {
+#             view = <></>
+#         }
+# }, [roomId])

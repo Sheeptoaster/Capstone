@@ -10,6 +10,7 @@ function UserDetails({ user, setUpdate }) {
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
     const [email, setEmail] = useState(user.email);
+    const [errors, setErrors] = useState([])
 
     const current = useSelector((state) => state.session.user);
 
@@ -27,6 +28,7 @@ function UserDetails({ user, setUpdate }) {
 
     const handleCancel = () => {
         setEdit(false);
+        setErrors([])
         setEmail(user.email);
         setFirstName(user.firstName);
         setLastName(user.lastName);
@@ -51,8 +53,15 @@ function UserDetails({ user, setUpdate }) {
                 "email": email
             })
         })
-        setEdit(false)
-        setUpdate(true)
+        if (res.ok) {
+            setEdit(false)
+            setUpdate(true)
+        } else if (res.status < 500) {
+            const data = await res.json()
+            if (data.errors) {
+                setErrors(data.errors)
+            }
+        }
     };
 
     let editBtn;
@@ -84,6 +93,13 @@ function UserDetails({ user, setUpdate }) {
     if (edit) {
         userDetails = (
             <div className="user-card-names" style={{"marginBottom": "2em"}}>
+                <div className="login-form-errors-container">
+                    {errors?.map((error, ind) => (
+                        <div key={ind} className="login-form-errors">
+                            {error}
+                        </div>
+                    ))}
+                </div>
                 <form className="user-edit-form">
                     <div className="user-edit-container">
                         <label>Username</label>

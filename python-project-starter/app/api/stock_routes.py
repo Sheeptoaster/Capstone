@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request
 from random import random
 from time import time
 from decimal import Decimal
-from flask_login import current_user, AnonymousUserMixin, user_logged_out
+from flask_login import current_user
 
 from app.models import db
 from app.models import Stock, PriceHistory, Watchlist, Portfolio, User, Transaction
