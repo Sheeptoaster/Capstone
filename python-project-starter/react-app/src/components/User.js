@@ -22,6 +22,7 @@ function User({ notifications }) {
       return;
     }
     (async () => {
+      document.title = "User Dashboard"
       const response = await fetch(`/api/users/${userId}`);
       const user = await response.json();
       setUser(user);

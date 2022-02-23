@@ -10,6 +10,9 @@ function LandingTab() {
     const [tab, setTab] = useState(0);
     // const history = useHistory()
     
+    useEffect(() => {
+        document.title = "Login Page"
+    })
 
     let page;
     if (tab === 1) {

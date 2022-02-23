@@ -18,6 +18,7 @@ function StockOverview() {
     }, []);
 
     useEffect(async () => {
+        document.title = "Home"
         const updateData = setInterval(async () => {
             if (user) {
                 const res = await fetch(`/api/stocks/all/${user.id}`);

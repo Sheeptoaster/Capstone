@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import './AddCompany.css'
 
@@ -9,6 +9,10 @@ function AddCompany() {
     const [errors, setErrors] = useState([]);
 
     const history = useHistory()
+
+    useEffect(() => {
+        document.title = "List Company"
+    })
 
     const handleCancel = (e) => {
         e.preventDefault();

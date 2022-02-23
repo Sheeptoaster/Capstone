@@ -49,10 +49,6 @@ function App() {
         <Route path="/add/company" >
           <AddCompany />
         </Route>
-        
-        {/* <Route path='/sign-up' exact={true}>
-          <SignUpForm />
-        </Route> */}
 
         <ProtectedRoute path='/p/:userId' exact={true} >
           <User notifications={notifications} />
