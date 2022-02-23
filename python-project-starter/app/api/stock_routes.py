@@ -89,6 +89,9 @@ def get_all():
     res = {}
     stocks = Stock.query.all()
 
+    if current_user == None:
+        return jsonify(res)
+
     for stock in stocks:
         watched = Watchlist.query.filter(current_user.id == Watchlist.userId).filter(stock.id == Watchlist.stockId).first()
         owned = Portfolio.query.filter(current_user.id == Portfolio.userId).filter(stock.id == Portfolio.stockId).first()
