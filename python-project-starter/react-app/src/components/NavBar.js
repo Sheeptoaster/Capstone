@@ -20,7 +20,7 @@ const NavBar = ({ notifications, setNotifications }) => {
   const isMounted = useRef(false)
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  
+
   const handleSidebar = () => {
     setSidebar(!sidebar);
   };
@@ -126,6 +126,12 @@ const NavBar = ({ notifications, setNotifications }) => {
           </li>
 
           {alert}
+
+          <li className="nav-text" onClick={handleSidebar}>
+            <NavLink to="/add/company">
+              <span onClick={handleSidebar}>List Your Company</span>
+            </NavLink>
+          </li>
 
           <li className="nav-text" onClick={handleSidebar}>
             <a

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import fishMarble from "./fish-marbles.jpg";
@@ -7,6 +7,7 @@ import "./LandingTab.css";
 
 function LandingTab() {
     const [tab, setTab] = useState(0);
+
 
     let page;
     if (tab === 1) {

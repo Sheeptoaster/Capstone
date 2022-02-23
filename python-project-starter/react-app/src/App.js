@@ -7,6 +7,7 @@ import NavAuth from './components/AuthNav';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import StockOverview from './components/Stocks/StockOverview';
 import User from './components/User';
+import AddCompany from './components/Stocks/AddCompany';
 import LandingTab from './components/auth/LandingTab';
 import { authenticate } from './store/session';
 
@@ -45,6 +46,10 @@ function App() {
           <LandingTab />
         </Route>
 
+        <Route path="/add/company" >
+          <AddCompany />
+        </Route>
+        
         {/* <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route> */}
@@ -52,6 +57,7 @@ function App() {
         <ProtectedRoute path='/p/:userId' exact={true} >
           <User notifications={notifications} />
         </ProtectedRoute>
+
 
         <ProtectedRoute path='/' exact={true} >
           <StockOverview />
