@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request
 from random import random
 from time import time
 from decimal import Decimal
-from flask_login import current_user
+from flask_login import current_user, AnonymousUserMixin, user_logged_out
 
 from app.models import db
 from app.models import Stock, PriceHistory, Watchlist, Portfolio, User, Transaction
@@ -94,74 +94,72 @@ def price_data():
     return res
 
 
-@stock_routes.route("/all")
-def get_all():
+@stock_routes.route("/all/<int:userId>")
+def get_all(userId):
     res = {}
     stocks = Stock.query.all()
 
-    u = User.query.get(current_user.id)
-    if u == None:
-        return
+    print(userId)
+    if userId:
+        for stock in stocks:
+            watched = Watchlist.query.filter(userId == Watchlist.userId).filter(
+                stock.id == Watchlist.stockId).first()
+            owned = Portfolio.query.filter(userId == Portfolio.userId).filter(
+                stock.id == Portfolio.stockId).first()
+            history = PriceHistory.query.filter(
+                stock.id == PriceHistory.stockId).first()
 
-    for stock in stocks:
-        watched = Watchlist.query.filter(current_user.id == Watchlist.userId).filter(
-            stock.id == Watchlist.stockId).first()
-        owned = Portfolio.query.filter(current_user.id == Portfolio.userId).filter(
-            stock.id == Portfolio.stockId).first()
-        history = PriceHistory.query.filter(
-            stock.id == PriceHistory.stockId).first()
-
-        if watched == None and owned == None and history == None:
-            res[stock.id] = {
-                "id": stock.id,
-                "name": stock.name,
-                "ticker": stock.ticker,
-                "price": dumps(stock.price),
-                "owned": False,
-                "history": False,
-                "watched": False
-            }
-        elif watched == None and owned == None:
-            res[stock.id] = {
-                "id": stock.id,
-                "name": stock.name,
-                "ticker": stock.ticker,
-                "price": dumps(stock.price),
-                "owned": False,
-                "history": dumps(history.price),
-                "watched": False
-            }
-        elif watched == None and owned:
-            res[stock.id] = {
-                "id": stock.id,
-                "name": stock.name,
-                "ticker": stock.ticker,
-                "price": dumps(stock.price),
-                "owned": dumps(owned.count),
-                "history": dumps(history.price),
-                "watched": False
-            }
-        elif watched and owned == None:
-            res[stock.id] = {
-                "id": stock.id,
-                "name": stock.name,
-                "ticker": stock.ticker,
-                "price": dumps(stock.price),
-                "owned": False,
-                "history": dumps(history.price),
-                "watched": True
-            }
-        else:
-            res[stock.id] = {
-                "id": stock.id,
-                "name": stock.name,
-                "ticker": stock.ticker,
-                "price": dumps(stock.price),
-                "owned": dumps(owned.count),
-                "history": dumps(history.price),
-                "watched": True
-            }
-    db.session.remove()
+            if watched == None and owned == None and history == None:
+                res[stock.id] = {
+                    "id": stock.id,
+                    "name": stock.name,
+                    "ticker": stock.ticker,
+                    "price": dumps(stock.price),
+                    "owned": False,
+                    "history": False,
+                    "watched": False
+                }
+            elif watched == None and owned == None:
+                res[stock.id] = {
+                    "id": stock.id,
+                    "name": stock.name,
+                    "ticker": stock.ticker,
+                    "price": dumps(stock.price),
+                    "owned": False,
+                    "history": dumps(history.price),
+                    "watched": False
+                }
+            elif watched == None and owned:
+                res[stock.id] = {
+                    "id": stock.id,
+                    "name": stock.name,
+                    "ticker": stock.ticker,
+                    "price": dumps(stock.price),
+                    "owned": dumps(owned.count),
+                    "history": dumps(history.price),
+                    "watched": False
+                }
+            elif watched and owned == None:
+                res[stock.id] = {
+                    "id": stock.id,
+                    "name": stock.name,
+                    "ticker": stock.ticker,
+                    "price": dumps(stock.price),
+                    "owned": False,
+                    "history": dumps(history.price),
+                    "watched": True
+                }
+            else:
+                res[stock.id] = {
+                    "id": stock.id,
+                    "name": stock.name,
+                    "ticker": stock.ticker,
+                    "price": dumps(stock.price),
+                    "owned": dumps(owned.count),
+                    "history": dumps(history.price),
+                    "watched": True
+                }
+        db.session.remove()
     return jsonify(res)
 
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import fishMarble from "./fish-marbles.jpg";
@@ -7,7 +8,8 @@ import "./LandingTab.css";
 
 function LandingTab() {
     const [tab, setTab] = useState(0);
-
+    // const history = useHistory()
+    
 
     let page;
     if (tab === 1) {
