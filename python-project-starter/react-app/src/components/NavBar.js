@@ -31,10 +31,10 @@ const NavBar = ({ notifications, setNotifications }) => {
 
   useEffect(async () => {
     // Executes Price Logging Route Function Every n Seconds
-    if (isMounted) {
+    if (isMounted && user) {
       const postData = setInterval(async () => {
         const res = await fetch(`/api/stocks/`)
-        const alert_res = await fetch(`/api/watchlists/alert/`)
+        const alert_res = await fetch(`/api/watchlists/alert/${user.id}`)
         const data = await alert_res.json()
         if (isMounted.current) return;
         setNotifications(Object.keys(data).length)

@@ -46,14 +46,11 @@ def change_price_alert(userId, stockId):
         return "Updated"
 
 
-@watchlist_routes.route('/alert/')
-def get_alerts():
+@watchlist_routes.route('/alert/<int:userId>')
+def get_alerts(userId):
     res = {}
 
-    if current_user == None:
-        return
-
-    alert = Watchlist.query.filter(current_user.id == Watchlist.userId).all()
+    alert = Watchlist.query.filter(userId == Watchlist.userId).all()
 
 
     for a in alert:
