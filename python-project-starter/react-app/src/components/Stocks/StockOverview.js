@@ -19,7 +19,6 @@ function StockOverview() {
     }, [])
 
     useEffect(async () => {
-        if (isMounted) {
             const updateData = setInterval(async () => {
                 const res = await fetch("/api/stocks/all")
                 const data = await res.json()
@@ -31,7 +30,6 @@ function StockOverview() {
                 setStocks(data)
             }, 30 * 1000)
             return () => clearInterval(updateData)
-        }
     }, [])
 
     useEffect(async () => {

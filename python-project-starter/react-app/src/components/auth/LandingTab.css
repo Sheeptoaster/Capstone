@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Genos:ital,wght@1,100&display=swap');
+
+.marble-container {
+    position: absolute;
+    z-index: -2;
+    display: flex;
+    height: 48em;
+    width: 45em;
+    margin: -1% 15%;
+}
+
+.fish-marble {
+    width: 150em;
+}
+
+.falling-marble {
+    width: 50em;
+}
+
+.fotm-h2 {
+    text-align: center;
+    margin-top: 6%;
+    font-size: 4em;
+    font-weight: bolder;
+    color: var(--brownish);
+    font-family: "Genos", sans-serif;
+}
