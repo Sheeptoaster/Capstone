@@ -51,7 +51,7 @@ def get_alerts():
     res = {}
 
     if current_user == None:
-        return jsonify(res)
+        return
 
     alert = Watchlist.query.filter(current_user.id == Watchlist.userId).all()
 
