@@ -164,9 +164,9 @@ def purge_price_data(stock):
     return
 ```
 
-## Planned Features
+# Planned Features
 
-Auto Buy / Auto Sell At Price Point
+### Auto Buy / Auto Sell At Price Point
 
-Price Alert For Price Increase
+### Price Alert For Price Increase
 
