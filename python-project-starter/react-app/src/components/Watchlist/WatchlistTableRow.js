@@ -5,12 +5,17 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
     const [newAmount, setNewAmount] = useState(s.priceAlert)
     const [editAlert, setEditAlert] = useState(false)
     const [conDelete, setConDelete] = useState(false)
-
+    const [errors, setErrors] = useState("");
 
     const handleUpdate = async () => {
         if (newAmount === s.priceAlert) {
             setEditAlert(false)
             return
+        }
+
+        if (newAmount == 0) {
+            setErrors("Please Enter A Value Over 0.");
+            return;
         }
 
         const res = await fetch(`/api/watchlists/change/${s.stockId}/${user.id}`, {
@@ -69,7 +74,7 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
     let amountField
 
     if(editAlert) {
-        amountField = <td><input id ='edit-owned' type='number' min={0} name='amount' value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
+        amountField = <td> <p className="watchlist-errors">{errors}</p><input id ='edit-owned' type='number' min={0} name='amount' value={newAmount} onChange={e => setNewAmount(e.target.value)} /></td>
     } else {
         amountField = <td>${parseFloat(s.priceAlert).toFixed(2)}</td>
     }
