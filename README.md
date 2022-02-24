@@ -74,7 +74,7 @@ This application can also be downloaded locally and run by:
   ![image](https://user-images.githubusercontent.com/85136034/155236556-b6fd4cae-aaea-4399-93ab-ddb82cd8e48f.png)
   
   Edit User Information Page
-  ![image](https://user-images.githubusercontent.com/85136034/155236661-37f478c4-0f0e-45e6-b3b3-3c3106d7c482.png)
+ ![image](https://user-images.githubusercontent.com/85136034/155476805-51f364e8-4407-445f-bee3-e494de8cbca2.png)
 
   Transaction List
   ![image](https://user-images.githubusercontent.com/85136034/155236628-810f59f3-3ee0-47f5-85e2-0ceb1dd22b84.png)
@@ -85,8 +85,15 @@ This application can also be downloaded locally and run by:
   View Watchlist and Change Alert Price Value
   ![image](https://user-images.githubusercontent.com/85136034/155237424-0c8a8f24-cad8-4035-a6e2-b9d64d28fbd1.png)
 
-   Notifications When Stock Falls Under Alert Price
-   ![image](https://user-images.githubusercontent.com/85136034/155237502-92666315-0822-4fba-970a-5183738d2fa2.png)
+  Notifications When Stock Falls Under Alert Price
+  ![image](https://user-images.githubusercontent.com/85136034/155237502-92666315-0822-4fba-970a-5183738d2fa2.png)
 
+  Add Company Form
+  ![image](https://user-images.githubusercontent.com/85136034/155476902-ce6f1c08-57f1-48fc-b098-24672e2669fa.png)
+
+  Login And Signup Forms
+  ![image](https://user-images.githubusercontent.com/85136034/155476961-2db2e7a2-cb96-40b9-9f63-cfe15225c1c3.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155476982-ed94090c-9fb0-40d9-a192-fa60753b7061.png)
 
   
+ 
