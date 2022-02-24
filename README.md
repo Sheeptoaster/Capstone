@@ -109,45 +109,45 @@ def price_data():
     db.session.remove()
     return res`
  
- `def price_change(stock):
-    # Creates Random Dec Between 0 and 1
-    change = Decimal(random())
+`def price_change(stock):
+  # Creates Random Dec Between 0 and 1
+  change = Decimal(random())
 
-    # If stock's weight is less than change
-    # Stock Weight Increases + Stock Value Increase
-    if stock.weight < change - Decimal(0.01):
-        stock.price = (stock.price * (change * Decimal(3.25) /
-                       Decimal(100))) + stock.price
-        stock.weight = stock.weight + (stock.weight * (change / Decimal(6.75)))
-        db.session.commit()
-    # If Stock's weight is greater than change
-    # Stock Weight Decreases + Stock Value Decreases
-    else:
-        stock.price = (stock.price * (change * Decimal(3.45) /
-                       Decimal(100) * Decimal(-1))) + stock.price
-        stock.weight = stock.weight - (stock.weight * (change / Decimal(6.75)))
-        db.session.commit()
+  # If stock's weight is less than change
+  # Stock Weight Increases + Stock Value Increase
+  if stock.weight < change - Decimal(0.01):
+      stock.price = (stock.price * (change * Decimal(3.25) /
+                     Decimal(100))) + stock.price
+      stock.weight = stock.weight + (stock.weight * (change / Decimal(6.75)))
+      db.session.commit()
+  # If Stock's weight is greater than change
+  # Stock Weight Decreases + Stock Value Decreases
+  else:
+      stock.price = (stock.price * (change * Decimal(3.45) /
+                     Decimal(100) * Decimal(-1))) + stock.price
+      stock.weight = stock.weight - (stock.weight * (change / Decimal(6.75)))
+      db.session.commit()
 
-    # Sends Updated Stock to Be Catalogged
-    data(stock)`
-    
-    `def data(stock):
-    # Posts Price Data Point to PriceHistory Table
-    post_price_data(stock)
-    # Removes Data from PriceHistory Table if more than 500 entries with that stockId exist
-    purge_price_data(stock)`
-    
-    `def post_price_data(stock):
-    price_point = PriceHistory(
-        stockId=stock.id,
-        price=stock.price,
-        time=time(),
-        interval="60 Seconds"
-    )
+  # Sends Updated Stock to Be Catalogged
+  data(stock)`
 
-    db.session.add(price_point)
-    db.session.commit()
-    return price_point
+  `def data(stock):
+  # Posts Price Data Point to PriceHistory Table
+  post_price_data(stock)
+  # Removes Data from PriceHistory Table if more than 500 entries with that stockId exist
+  purge_price_data(stock)`
+
+  `def post_price_data(stock):
+  price_point = PriceHistory(
+      stockId=stock.id,
+      price=stock.price,
+      time=time(),
+      interval="60 Seconds"
+  )
+
+  db.session.add(price_point)
+  db.session.commit()
+  return price_point
 
 
 def purge_price_data(stock):
