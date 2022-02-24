@@ -7,6 +7,7 @@ import NavAuth from './components/AuthNav';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import StockOverview from './components/Stocks/StockOverview';
 import User from './components/User';
+import Component404 from './Component404';
 import AddCompany from './components/Stocks/AddCompany';
 import LandingTab from './components/auth/LandingTab';
 import { authenticate } from './store/session';
@@ -59,6 +60,9 @@ function App() {
           <StockOverview />
         </ProtectedRoute>
 
+        <Route path="*">
+          <Component404 />
+        </Route>
       </Switch>
 
     </BrowserRouter>

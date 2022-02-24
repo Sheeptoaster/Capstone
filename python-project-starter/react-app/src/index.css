@@ -16,3 +16,9 @@
     --light-green: #9EB1B1;
     --off-white: #EEF1EF;
 }
+
+.image-404-logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
