@@ -163,3 +163,10 @@ def purge_price_data(stock):
         db.session.commit()
     return
 ```
+
+## Planned Features
+
+Auto Buy / Auto Sell At Price Point
+
+Price Alert For Price Increase
+
