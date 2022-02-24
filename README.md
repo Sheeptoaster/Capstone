@@ -74,7 +74,7 @@ This application can also be downloaded locally and run by:
   ![image](https://user-images.githubusercontent.com/85136034/155236556-b6fd4cae-aaea-4399-93ab-ddb82cd8e48f.png)
   
   Edit User Information Page
-  ![image](https://user-images.githubusercontent.com/85136034/155236661-37f478c4-0f0e-45e6-b3b3-3c3106d7c482.png)
+ ![image](https://user-images.githubusercontent.com/85136034/155476805-51f364e8-4407-445f-bee3-e494de8cbca2.png)
 
   Transaction List
   ![image](https://user-images.githubusercontent.com/85136034/155236628-810f59f3-3ee0-47f5-85e2-0ceb1dd22b84.png)
@@ -85,8 +85,81 @@ This application can also be downloaded locally and run by:
   View Watchlist and Change Alert Price Value
   ![image](https://user-images.githubusercontent.com/85136034/155237424-0c8a8f24-cad8-4035-a6e2-b9d64d28fbd1.png)
 
-   Notifications When Stock Falls Under Alert Price
-   ![image](https://user-images.githubusercontent.com/85136034/155237502-92666315-0822-4fba-970a-5183738d2fa2.png)
+  Notifications When Stock Falls Under Alert Price
+  ![image](https://user-images.githubusercontent.com/85136034/155237502-92666315-0822-4fba-970a-5183738d2fa2.png)
 
+  Add Company Form
+  ![image](https://user-images.githubusercontent.com/85136034/155476902-ce6f1c08-57f1-48fc-b098-24672e2669fa.png)
+
+  Login And Signup Forms
+  ![image](https://user-images.githubusercontent.com/85136034/155476961-2db2e7a2-cb96-40b9-9f63-cfe15225c1c3.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155476982-ed94090c-9fb0-40d9-a192-fa60753b7061.png)
 
   
+  ## Updating Prices and Populating Graphs
+  
+ ```
+ @stock_routes.route('/')
+def price_data():
+    res = {}
+    stocks = Stock.query.all()
+    for stock in stocks:
+        price_change(stock)
+    for stock in stocks:
+        res[stock.id] = stock.to_dict()
+    db.session.remove()
+    return res
+```
+```
+def price_change(stock):
+  # Creates Random Dec Between 0 and 1
+  change = Decimal(random())
+
+  # If stock's weight is less than change
+  # Stock Weight Increases + Stock Value Increase
+  if stock.weight < change - Decimal(0.01):
+      stock.price = (stock.price * (change * Decimal(3.25) /
+                     Decimal(100))) + stock.price
+      stock.weight = stock.weight + (stock.weight * (change / Decimal(6.75)))
+      db.session.commit()
+  # If Stock's weight is greater than change
+  # Stock Weight Decreases + Stock Value Decreases
+  else:
+      stock.price = (stock.price * (change * Decimal(3.45) /
+                     Decimal(100) * Decimal(-1))) + stock.price
+      stock.weight = stock.weight - (stock.weight * (change / Decimal(6.75)))
+      db.session.commit()
+
+  # Sends Updated Stock to Be Catalogged
+  data(stock)
+```  
+```
+  def data(stock):
+    # Posts Price Data Point to PriceHistory Table
+    post_price_data(stock)
+    # Removes Data from PriceHistory Table if more than 500 entries with that stockId exist
+    purge_price_data(stock)
+
+  def post_price_data(stock):
+    price_point = PriceHistory(
+      stockId=stock.id,
+      price=stock.price,
+      time=time(),
+      interval="60 Seconds"
+  )
+
+  db.session.add(price_point)
+  db.session.commit()
+  return price_point
+```
+```
+def purge_price_data(stock):
+    data_point = PriceHistory.query.filter(
+        stock.id == PriceHistory.stockId).all()
+    if len(data_point) > 90:
+        removed = PriceHistory.query.order_by(PriceHistory.id).filter(
+            stock.id == PriceHistory.stockId).first()
+        db.session.delete(removed)
+        db.session.commit()
+    return
+```
