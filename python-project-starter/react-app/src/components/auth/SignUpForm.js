@@ -32,6 +32,11 @@ const SignUpForm = ({ setTab }) => {
       }
    };
 
+   const passwordError = (e) => {
+      e.preventDefault()
+      setErrors(["Password Fields Must Match."])
+   }
+
    const updateUsername = (e) => {
       setUsername(e.target.value);
    };
@@ -54,7 +59,7 @@ const SignUpForm = ({ setTab }) => {
 
 
    let submitbtn = (
-      <button className="form-submit-btn-grey" disabled type="submit">
+      <button className="form-submit-btn-grey" type="submit" onClick={passwordError}>
          Signup
       </button>
    );
@@ -75,7 +80,7 @@ const SignUpForm = ({ setTab }) => {
    if (user) {
       return <Redirect to="/" />;
    }
-   
+
    return (
       <>
          <div className="login-form-container">

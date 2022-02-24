@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import PortfolioMain from './Portfolio/PortfolioMain';
 import './User.css'
 import Watchlist from './Watchlist/Watchlist';
@@ -7,6 +7,7 @@ import UserDetails from './UserDetails/UserDetails';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from 'react-redux';
 library.add(faBell);
 
 
@@ -16,6 +17,10 @@ function User({ notifications }) {
   const [update, setUpdate] = useState(false)
   const { userId } = useParams();
 
+  const history = useHistory()
+
+  const c_user = useSelector(state => state.session.user)
+
 
   useEffect(() => {
     if (!userId) {
@@ -23,10 +28,13 @@ function User({ notifications }) {
     }
     (async () => {
       document.title = "User Dashboard"
-      const response = await fetch(`/api/users/${userId}`);
+      const response = await fetch(`/api/users/${c_user.id}`);
       const user = await response.json();
       setUser(user);
       setUpdate(false)
+      if (c_user.id !== userId) {
+        history.push(`/p/${c_user.id}`)
+      }
     })();
   }, [userId, update]);
 

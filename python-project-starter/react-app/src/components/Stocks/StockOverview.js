@@ -18,7 +18,7 @@ function StockOverview() {
     }, []);
 
     useEffect(async () => {
-        document.title = "Home"
+        document.title = "Home";
         const updateData = setInterval(async () => {
             if (user) {
                 const res = await fetch(`/api/stocks/all/${user.id}`);
@@ -53,10 +53,13 @@ function StockOverview() {
     return (
         <>
             {showTable && (
-                <div className="growth-chart-overview">
-                    <TopGrowthChart stock={growth} d={"g"} w={800} />
-                    <TopGrowthChart stock={loss} d={"l"} w={800} />
-                </div>
+                <>
+                    <h2 className="stock-chart-highlight-h2">Highlights</h2>
+                    <div className="growth-chart-overview">
+                        <TopGrowthChart stock={growth} d={"g"} w={800} />
+                        <TopGrowthChart stock={loss} d={"l"} w={800} />
+                    </div>
+                </>
             )}
             <div>
                 <table>

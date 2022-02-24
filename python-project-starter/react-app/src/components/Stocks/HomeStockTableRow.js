@@ -15,22 +15,25 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     const [clickSell, setClickSell] = useState(false);
     const [watchlist, setWatchlist] = useState(false);
     const [priceAlert, setPriceAlert] = useState(
-        parseFloat(s.price).toFixed(0)
+        // parseFloat(s.price).toFixed(0)
+        Math.floor(s.price)
     );
     const [showChart, setShowChart] = useState(false);
     const [errors, setErrors] = useState("");
 
     const handleClickBuy = () => {
         setClickBuy(true);
+        setWatchlist(false);
     };
 
     const handleClickSell = () => {
         setClickSell(true);
+        setWatchlist(false);
     };
 
     const handleCancel = () => {
         setNewAmount(s.owned || 0);
-        setPriceAlert(parseFloat(s.price).toFixed(0));
+        setPriceAlert(Math.floor(s.price));
         setNewBalance(userBalance);
         setWatchlist(false);
         setClickBuy(false);
@@ -260,6 +263,12 @@ function HomeStockTableRow({ s, setUpdate, user }) {
 
     const handleWatchClick = () => {
         setWatchlist(true);
+        setNewAmount(s.owned || 0);
+        setPriceAlert(Math.floor(s.price));
+        setNewBalance(userBalance);
+        setClickBuy(false);
+        setClickSell(false);
+        setErrors("");
     };
     const handleUnwatch = async () => {
         const res = await fetch(`/api/watchlists/change/${s.id}/${user.id}`, {
@@ -270,7 +279,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     };
 
     const handleEditAlert = async () => {
-        if (priceAlert === 0) {
+        if (priceAlert == 0) {
             setErrors("Please Enter A Value Over 0.");
             return;
         }
@@ -314,9 +323,11 @@ function HomeStockTableRow({ s, setUpdate, user }) {
                         name="price-alert"
                         type="number"
                         min={0}
-                        value={priceAlert - 1}
+                        value={priceAlert}
                         max={s.price}
-                        onChange={(e) => setPriceAlert(e.target.value)}
+                        onChange={(e) => {
+                            setPriceAlert(e.target.value);
+                        }}
                     />
                     <span className="green-btn" onClick={handleEditAlert}>
                         Submit
