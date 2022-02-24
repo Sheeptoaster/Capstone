@@ -74,7 +74,6 @@ const SignUpForm = ({ setTab }) => {
 
    const updateRepeatPassword = (e) => {
       setRepeatPassword(e.target.value);
-
    };
 
    if (user) {

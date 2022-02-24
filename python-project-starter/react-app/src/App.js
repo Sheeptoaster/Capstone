@@ -46,9 +46,9 @@ function App() {
           <LandingTab />
         </Route>
 
-        <Route path="/add/company" >
+        <ProtectedRoute path="/add/company" >
           <AddCompany />
-        </Route>
+        </ProtectedRoute>
 
         <ProtectedRoute path='/p/:userId' exact={true} >
           <User notifications={notifications} />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import './AddCompany.css'
+import "./AddCompany.css";
 
 function AddCompany() {
     const [stockName, setStockName] = useState("");
@@ -8,22 +8,22 @@ function AddCompany() {
     const [listPrice, setListPrice] = useState(0);
     const [errors, setErrors] = useState([]);
 
-    const history = useHistory()
+    const history = useHistory();
 
     useEffect(() => {
-        document.title = "List Company"
-    })
+        document.title = "List Company";
+    }, []);
 
     const handleCancel = (e) => {
         e.preventDefault();
         setStockName("");
         setTicker("");
         setListPrice(0);
-        return history.push("/")
+        return history.push("/");
     };
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         const res = await fetch("/api/stocks/post/new", {
             method: "POST",
             headers: {
@@ -36,13 +36,14 @@ function AddCompany() {
             }),
         });
         if (res.ok) {
-            const data = await res.json()
-            return history.push("/")
-        } else if (res.status < 500) {
             const data = await res.json();
-            setErrors(data.errors)
+            history.push("/")
+        } else {
+            const data = await res.json()
+            if (res.status < 500) {
+                setErrors(data.errors)
+            }
         }
-
     };
 
     return (
@@ -50,7 +51,7 @@ function AddCompany() {
             <div className="stock-form-container">
                 <h3>List Company</h3>
                 <div className="login-form-errors-container">
-                    {errors?.map((error, ind) => (
+                    {errors.map((error, ind) => (
                         <div key={ind} className="login-form-errors">
                             {error}
                         </div>
@@ -78,7 +79,9 @@ function AddCompany() {
                             name="ticker"
                             value={ticker}
                             maxLength={5}
-                            onChange={(e) => setTicker(e.target.value.toUpperCase())}
+                            onChange={(e) =>
+                                setTicker(e.target.value.toUpperCase())
+                            }
                         />
                     </div>
                     <div className="stock-container">
@@ -93,9 +96,7 @@ function AddCompany() {
                             onChange={(e) => setListPrice(e.target.value)}
                         />
                     </div>
-                    <button className="stock-submit-btn">
-                        Submit
-                    </button>
+                    <button className="stock-submit-btn">Submit</button>
                     <button className="stock-submit-btn" onClick={handleCancel}>
                         Cancel
                     </button>

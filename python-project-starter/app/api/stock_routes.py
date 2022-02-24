@@ -362,7 +362,6 @@ def get_stock_by_id(stockId):
 def post_stock():
     form = StockForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-
     if form.validate_on_submit():
         new_stock = Stock(
             name=form.data['stockName'],
