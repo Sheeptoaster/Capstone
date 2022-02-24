@@ -28,7 +28,7 @@ function TopGrowthChart({ stock, d, w }) {
             })
         }
         fetchData()
-    }, [])
+    }, [stock])
 
 
 
@@ -67,7 +67,7 @@ function TopGrowthChart({ stock, d, w }) {
 
     let banner
     if (d === 'l') {
-        banner = <h2 className='h2-chart-decrease'>Biggest Price Drop</h2>
+        banner = <h2 className='h2-chart-decrease'>Trending Company</h2>
     } else if (d === "g") {
         banner = <h2 className='h2-chart-increase'>Biggest Price Increase</h2>
     } else {
@@ -77,7 +77,6 @@ function TopGrowthChart({ stock, d, w }) {
     return (
         <>
                 <div className='stock-chart-container'>
-                    {banner}
                     <div className='stock-chart-stock-info'>
                         <span className='stock-chart-stock-name'>{stock.name}</span>
                         <span className='stock-chart-stock-ticker'>{stock.ticker}</span>

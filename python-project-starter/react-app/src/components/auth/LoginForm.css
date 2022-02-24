@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 5%;
     width: 100%;
     padding: 4.5em 15em 5em 15em;
     position: relative;
@@ -63,15 +64,16 @@
     display: block;
     padding: 1em;
     width: 100%;
-    background: linear-gradient( to right, var(--dark-blue), var(--light-blue));
-    filter: grayscale(50%);
+    color: #eef1efea;
+    background-color: #6d97b1;
+    filter: grayscale(10%);
     border: 0;
-    color: #fff;
     cursor: pointer;
     font-size: .75em;
     font-weight: 600;
     margin-top: 1em;
     text-shadow: 0 1px 0 rgba(black, .2);
+    cursor: default;
 }
 
 .form-submit-btn:focus {

@@ -7,6 +7,7 @@
 
 .stock-chart-container {
     display: inline-block;
+    margin-top: 0;
 }
 
 .h2-chart-increase {
@@ -40,4 +41,9 @@
 .stock-chart-stock-price {
     font-size: large;
     color: var(--brownish)
+}
+
+.stock-chart-highlight-h2 {
+    margin-top: 6%;
+    text-align: center;
 }
