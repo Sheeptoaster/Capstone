@@ -98,7 +98,8 @@ This application can also be downloaded locally and run by:
   
   ## Updating Prices and Populating Graphs
   
- `@stock_routes.route('/')
+ ```
+ @stock_routes.route('/')
 def price_data():
     res = {}
     stocks = Stock.query.all()
@@ -107,9 +108,10 @@ def price_data():
     for stock in stocks:
         res[stock.id] = stock.to_dict()
     db.session.remove()
-    return res`
- 
-`def price_change(stock):
+    return res
+```
+```
+def price_change(stock):
   # Creates Random Dec Between 0 and 1
   change = Decimal(random())
 
@@ -129,16 +131,17 @@ def price_data():
       db.session.commit()
 
   # Sends Updated Stock to Be Catalogged
-  data(stock)`
+  data(stock)
+```  
+```
+  def data(stock):
+    # Posts Price Data Point to PriceHistory Table
+    post_price_data(stock)
+    # Removes Data from PriceHistory Table if more than 500 entries with that stockId exist
+    purge_price_data(stock)
 
-  `def data(stock):
-  # Posts Price Data Point to PriceHistory Table
-  post_price_data(stock)
-  # Removes Data from PriceHistory Table if more than 500 entries with that stockId exist
-  purge_price_data(stock)`
-
-  `def post_price_data(stock):
-  price_point = PriceHistory(
+  def post_price_data(stock):
+    price_point = PriceHistory(
       stockId=stock.id,
       price=stock.price,
       time=time(),
@@ -148,8 +151,8 @@ def price_data():
   db.session.add(price_point)
   db.session.commit()
   return price_point
-
-
+```
+```
 def purge_price_data(stock):
     data_point = PriceHistory.query.filter(
         stock.id == PriceHistory.stockId).all()
@@ -158,4 +161,5 @@ def purge_price_data(stock):
             stock.id == PriceHistory.stockId).first()
         db.session.delete(removed)
         db.session.commit()
-    return`
+    return
+```
