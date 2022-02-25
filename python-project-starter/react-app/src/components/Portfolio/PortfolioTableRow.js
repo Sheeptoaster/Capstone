@@ -32,6 +32,11 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
          return;
       }
 
+      if (newAmount < 0) {
+         setErrors("Please Enter A Valid Amount")
+         return;
+      }
+
       if (newAmount * s.currentPrice > user.balance) {
         setErrors("Insufficient Balance. Please Select a New Amount.");
         return;
@@ -56,6 +61,11 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
       if (newAmount === s.count) {
          setEditSell(false);
          setEditContentSell(false);
+         return;
+      }
+
+      if (newAmount < 0) {
+         setErrors("Please Enter A Valid Amount")
          return;
       }
 
@@ -190,7 +200,7 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
    if (editContentBuy) {
       amountField = (
          <td>
-              <p className="watchlist-errors">{errors}</p>
+            <p className="watchlist-errors">{errors}</p>
             <input
                id="edit-owned"
                type="number"

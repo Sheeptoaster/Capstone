@@ -47,6 +47,11 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return;
         }
 
+        if (newAmount < 0) {
+            setErrors("Please Enter A Valid Amount")
+            return;
+        }
+
         if (newAmount * s.price > user.balance) {
             setErrors("Insufficient Balance. Please Select a New Amount.");
             return;
@@ -80,6 +85,11 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     const handleSell = async () => {
         if (newAmount === s.owned) {
             setClickSell(false);
+            return;
+        }
+
+        if (newAmount < 0) {
+            setErrors("Please Enter A Valid Amount")
             return;
         }
 
@@ -138,6 +148,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         } else if (clickSell) {
             owned = (
                 <td>
+                    <p className="watchlist-errors">{errors}</p>
                     <input
                         id="edit-owned"
                         type="number"
@@ -301,7 +312,8 @@ function HomeStockTableRow({ s, setUpdate, user }) {
 
     if (s.watched) {
         watched = (
-            <td>
+            <td className="watched-td-cell">
+                <p>Watching</p>
                 <FontAwesomeIcon
                     icon="fa-bell"
                     onClick={handleUnwatch}
@@ -339,7 +351,8 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             );
         } else {
             watched = (
-                <td onClick={handleWatchClick}>
+                <td className="watched-td-cell" onClick={handleWatchClick}>
+                    <p>Not Watching</p>
                     <FontAwesomeIcon
                         icon="fa-bell-slash"
                         className="watchlist-bell"

@@ -20,3 +20,17 @@
     color: var(--brownish);
     font-family: "Genos", sans-serif;
 }
+
+.landing-links {
+    display: flex;
+    flex: row;
+    justify-content: space-evenly;
+    margin-top: 5%;
+    font-size: 3em;
+    color: #183153;
+}
+
+.landing-about-links:visited {
+    text-decoration: none;
+    color: #183153;
+}

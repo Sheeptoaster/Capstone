@@ -4,16 +4,24 @@ import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import fishMarble from "./fish-marbles.jpg";
 import fallingMarble from "./falling-marbles.jpg";
-import combinedMarble from './marbles-combined.png'
+import combinedMarble from "./marbles-combined.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faGithub,
+    faLinkedin
+} from "@fortawesome/free-brands-svg-icons";
 import "./LandingTab.css";
+
+
 
 function LandingTab() {
     const [tab, setTab] = useState(0);
     // const history = useHistory()
 
     useEffect(() => {
-        document.title = "Login Page"
-    })
+        document.title = "Login Page";
+    });
 
     let page;
     if (tab === 1) {
@@ -24,7 +32,11 @@ function LandingTab() {
     return (
         <>
             <div className="marble-container">
-                <img className="combined-marble" src={combinedMarble} alt="marlbe login logo" />
+                <img
+                    className="combined-marble"
+                    src={combinedMarble}
+                    alt="marlbe login logo"
+                />
             </div>
             <h2 className="fatm-h2">For All The Marbles</h2>
             {page}

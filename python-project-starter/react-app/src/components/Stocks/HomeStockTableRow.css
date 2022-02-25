@@ -30,6 +30,10 @@
     border-radius: .35em;
 }
 
+.watched-td-cell {
+    text-align: center;
+}
+
 .stock-sell-balance {
     animation: blink-green 2s infinite;
     font-size: 1.075;
