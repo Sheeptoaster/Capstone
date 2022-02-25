@@ -53,16 +53,20 @@ This application can also be downloaded locally and run by:
   ## Features
   
   ## Home Page View
-  ![image](https://user-images.githubusercontent.com/85136034/155236336-413ca288-c22f-43d1-bcca-f06f9d78a643.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155801353-32367573-3192-469e-911b-9a0778efed9b.png)
   
   Chart View for Each Stock
-  ![image](https://user-images.githubusercontent.com/85136034/155237153-11bf8929-714c-43af-909d-d95a4b33c962.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155801441-4759e3a3-44ef-48ef-a6fd-1e25e3abd7d4.png)
 
   Sidebar Navigation
-  ![image](https://user-images.githubusercontent.com/85136034/155236471-99e5b51b-3d00-4d4e-b262-ef54111ef773.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155801195-d0ab9844-78ca-4c26-909d-260b5a5f1e77.png)
   
   Buy, Sell, and Add to Watchlist From Homepage 
-  ![image](https://user-images.githubusercontent.com/85136034/155237039-2f877404-be42-403c-a50b-340b5e0f9a8c.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155801636-b7bd8ec7-f9f7-4130-aef6-383c29193d0c.png)
+  
+  Add Stocks To Watchlist and Set Price Alert
+  ![image](https://user-images.githubusercontent.com/85136034/155801854-66edba5e-879b-4f07-a450-125113c41439.png)
+
 
 
   ## User Page
@@ -74,26 +78,27 @@ This application can also be downloaded locally and run by:
   ![image](https://user-images.githubusercontent.com/85136034/155236556-b6fd4cae-aaea-4399-93ab-ddb82cd8e48f.png)
   
   Edit User Information Page
- ![image](https://user-images.githubusercontent.com/85136034/155476805-51f364e8-4407-445f-bee3-e494de8cbca2.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155476805-51f364e8-4407-445f-bee3-e494de8cbca2.png)
 
   Transaction List
   ![image](https://user-images.githubusercontent.com/85136034/155236628-810f59f3-3ee0-47f5-85e2-0ceb1dd22b84.png)
   
   Buy and Sell From Portfolio
-  ![image](https://user-images.githubusercontent.com/85136034/155237355-57bf542b-cac6-4837-a863-4995033b8758.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155801706-e77ade01-afd3-4cb6-8c80-82caece8792b.png)
 
   View Watchlist and Change Alert Price Value
   ![image](https://user-images.githubusercontent.com/85136034/155237424-0c8a8f24-cad8-4035-a6e2-b9d64d28fbd1.png)
 
   Notifications When Stock Falls Under Alert Price
-  ![image](https://user-images.githubusercontent.com/85136034/155237502-92666315-0822-4fba-970a-5183738d2fa2.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155801275-4aef48ba-4edc-47e9-a3a3-984d5542103f.png)
 
   Add Company Form
   ![image](https://user-images.githubusercontent.com/85136034/155476902-ce6f1c08-57f1-48fc-b098-24672e2669fa.png)
 
   Login And Signup Forms
-  ![image](https://user-images.githubusercontent.com/85136034/155476961-2db2e7a2-cb96-40b9-9f63-cfe15225c1c3.png)
-  ![image](https://user-images.githubusercontent.com/85136034/155476982-ed94090c-9fb0-40d9-a192-fa60753b7061.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155800896-cb6b0233-eff1-4dad-8c2a-a89d94eb7b93.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155800929-58115150-e144-47be-a6f4-02bda0f985c8.png)
+  ![image](https://user-images.githubusercontent.com/85136034/155800976-41d126c3-bb31-426b-b938-a6a6f8e70979.png)
 
   
   ## Updating Prices and Populating Graphs
