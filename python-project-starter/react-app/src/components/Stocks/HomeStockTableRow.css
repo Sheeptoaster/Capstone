@@ -31,7 +31,18 @@
 }
 
 .watched-td-cell {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
     text-align: center;
+}
+
+.watchlist-text {
+    color: var(--brownish);
+}
+
+.watchlist-bell {
+    width: fit-content;
+    cursor: pointer;
 }
 
 .stock-sell-balance {

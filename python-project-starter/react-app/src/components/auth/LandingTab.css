@@ -51,11 +51,22 @@
 
 .about-text-expanded {
     color: var(--brownish);
-    border: 1px solid var(--brownish);
+    border: 1px solid var(--off-white);
     width: 500px;
     padding: 1.25em;
-    background-color: var(--off-white);
+    background-color: rgba(255, 255, 255, .5);
+    text-align: center;
     border-radius: .25em;
+}
+
+.about-text-expanded > a {
+    text-decoration: none;
+    color: rgba(6, 6, 207, 0.678);
+}
+
+.about-text-expanded > a:visited {
+    color: rgba(6, 6, 207, 0.678);
+    text-decoration: none;
 }
 
 .about-tab-expanded {

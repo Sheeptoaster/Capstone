@@ -71,7 +71,7 @@ function StockOverview() {
                             <th>Day Gain/Loss</th>
                             <th>Owned</th>
                             <th>Buy/Sell</th>
-                            <th>Watchlist</th>
+                            <th style={{"width": "250px"}}>Watchlist</th>
                         </tr>
                     </thead>
                     {Object.values(stocks).map((s) => (

@@ -48,7 +48,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         }
 
         if (newAmount < 0) {
-            setErrors("Please Enter A Valid Amount")
+            setErrors("Please Enter A Valid Amount");
             return;
         }
 
@@ -88,17 +88,13 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return;
         }
 
-        const negative = /\-/
-
-        if (newAmount)
-
         if (newAmount > s.owned) {
-            setErrors("Please Enter A Valid Amount")
+            setErrors("Please Enter A Valid Amount");
             return;
         }
 
         if (newAmount < 0) {
-            setErrors("Please Enter A Valid Amount")
+            setErrors("Please Enter A Valid Amount");
             return;
         }
 
@@ -321,13 +317,15 @@ function HomeStockTableRow({ s, setUpdate, user }) {
 
     if (s.watched) {
         watched = (
-            <td className="watched-td-cell">
-                <p>Watching</p>
-                <FontAwesomeIcon
-                    icon="fa-bell"
-                    onClick={handleUnwatch}
-                    className="watchlist-bell"
-                />
+            <td>
+                <div className="watched-td-cell">
+                    <div className="watchlist-text">Remove From Watchlist</div>
+                    <FontAwesomeIcon
+                        icon="fa-bell-slash"
+                        onClick={handleUnwatch}
+                        className="watchlist-bell"
+                    />
+                </div>
             </td>
         );
     } else {
@@ -360,12 +358,14 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             );
         } else {
             watched = (
-                <td className="watched-td-cell" onClick={handleWatchClick}>
-                    <p>Not Watching</p>
-                    <FontAwesomeIcon
-                        icon="fa-bell-slash"
-                        className="watchlist-bell"
-                    />
+                <td onClick={handleWatchClick}>
+                    <div className="watched-td-cell">
+                        <div className="watchlist-text">Add To Watchlist</div>
+                        <FontAwesomeIcon
+                            icon="fa-bell"
+                            className="watchlist-bell"
+                        />
+                    </div>
                 </td>
             );
         }

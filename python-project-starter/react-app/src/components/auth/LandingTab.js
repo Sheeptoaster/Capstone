@@ -18,37 +18,7 @@ function LandingTab() {
         document.title = "Login Page";
     });
 
-    const handleAbout = (e) => {
-        e.preventDefault();
-        setAboutTab(1);
-    };
 
-    const handleAboutClose = (e) => {
-        e.preventDefault();
-        setAboutTab(0);
-    };
-
-    let about = (
-        <div className="about-tab">
-            <span className="about-text" onClick={handleAbout}>
-                About
-            </span>
-        </div>
-    );
-    if (aboutTab === 1) {
-        about = (
-            <div className="about-tab-expanded">
-                <span className="about-text-expanded">
-                    For All The Marbles is a project I created that allows
-                    user's to be able to buy and sell stocks without having to
-                    risk anything real.
-                    <p className="close-tab" onClick={handleAboutClose}>
-                        Close
-                    </p>
-                </span>
-            </div>
-        );
-    }
 
     let page;
     if (tab === 1) {
@@ -66,7 +36,12 @@ function LandingTab() {
                 />
             </div>
             <h2 className="fatm-h2">For All The Marbles</h2>
-            {about}
+            <div className="about-tab-expanded">
+                <span className="about-text-expanded">
+                    For All The Marbles is a project I created that allows
+                user's to be able to simulate investing in the stock market without having to risk anything of their own. This project is based on the site <a href="https://www.robinhood.com" target="_#">Robinhood</a>. Signup or test out the site using our Demo account.
+                </span>
+            </div>
             {page}
         </>
     );
