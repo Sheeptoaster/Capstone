@@ -23,6 +23,9 @@ function AddCompany() {
     };
 
     const handleSubmit = async (e) => {
+        if (listPrice < 0) {
+            setErrors("Please Provide A Valid Price for Your Company")
+        }
         e.preventDefault();
         const res = await fetch("/api/stocks/post/new", {
             method: "POST",
@@ -92,6 +95,7 @@ function AddCompany() {
                             className="stock-input"
                             name="listPrice"
                             type="number"
+                            min={1}
                             value={listPrice}
                             onChange={(e) => setListPrice(e.target.value)}
                         />

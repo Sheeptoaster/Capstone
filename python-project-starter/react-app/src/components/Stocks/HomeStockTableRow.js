@@ -88,6 +88,10 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return;
         }
 
+        const negative = /\-/
+
+        if (newAmount)
+
         if (newAmount > s.owned) {
             setErrors("Please Enter A Valid Amount")
             return;

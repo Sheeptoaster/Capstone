@@ -34,3 +34,40 @@
     text-decoration: none;
     color: #183153;
 }
+
+.about-tab {
+    display: flex;
+    justify-content: center;
+}
+
+.about-text {
+    text-align: center;
+    font-size: 1.25em;
+    width: fit-content;
+    color: var(--brownish);
+    text-decoration: var(--brownish) underline;
+    cursor: pointer;
+}
+
+.about-text-expanded {
+    color: var(--brownish);
+    border: 1px solid var(--brownish);
+    width: 500px;
+    padding: 1.25em;
+    background-color: var(--off-white);
+    border-radius: .25em;
+}
+
+.about-tab-expanded {
+    display: flex;
+    justify-content: center;
+}
+
+.close-tab {
+    margin-top: 1em;
+    margin-bottom: -1em;
+    color: gray;
+    cursor: pointer;
+    width: fit-content;
+    text-decoration: gray underline;
+}
