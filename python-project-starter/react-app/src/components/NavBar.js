@@ -151,7 +151,7 @@ const NavBar = ({ notifications, setNotifications }) => {
             </a>
           </li>
 
-          <li className="nav-text logout-btn">
+          <li className="nav-text">
             <NavLink to="#" onClick={onLogout}>
               <LogoutButton onClick={handleSidebar} />
             </NavLink>
