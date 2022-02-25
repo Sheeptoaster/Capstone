@@ -23,8 +23,6 @@ function TopGrowthChart({ stock, d, w }) {
                 res.json().then((json) => {
                     setChart(json)
                 })
-            }).catch(error => {
-                console.error(error)
             })
         }
         fetchData()

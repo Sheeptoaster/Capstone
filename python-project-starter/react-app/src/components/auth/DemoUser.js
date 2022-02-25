@@ -13,7 +13,6 @@ const DemoLogin = () => {
     if (res.ok) {
       const data = await res.json()
       setDemo(data)
-      console.log(demo);
     }
   }, [])
 

@@ -99,7 +99,6 @@ def get_all(userId):
     res = {}
     stocks = Stock.query.all()
 
-    print(userId)
     if userId:
         for stock in stocks:
             watched = Watchlist.query.filter(userId == Watchlist.userId).filter(
