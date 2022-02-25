@@ -88,6 +88,11 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return;
         }
 
+        if (newAmount > s.owned) {
+            setErrors("Please Enter A Valid Amount")
+            return;
+        }
+
         if (newAmount < 0) {
             setErrors("Please Enter A Valid Amount")
             return;

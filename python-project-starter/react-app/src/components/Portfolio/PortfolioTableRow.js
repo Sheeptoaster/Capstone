@@ -64,6 +64,11 @@ const PortfolioTableRow = ({ s, setUpdate, user }) => {
          return;
       }
 
+      if (newAmount > s.count) {
+         setErrors("Please Enter A Valid Amount")
+         return;
+      }
+
       if (newAmount < 0) {
          setErrors("Please Enter A Valid Amount")
          return;
