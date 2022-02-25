@@ -2,7 +2,7 @@
 For All The Marbles is a clone of [Robinhood](https://robinhood.com/) where user's are able to invest in a pretend stock market.
 
 ## Getting Started
-To get use this project you can view the application at the live site [Will Insert Site Link When Deployed] and create an account, or test it out using the demo user.
+To get use this project you can view the application at the live site [For All The Marbles](https://capstone-fotm.herokuapp.com/) and create an account, or test it out using the demo user.
 
 This application can also be downloaded locally and run by:
   1. Clone the repository with `git clone git@github.com:Sheeptoaster/Capstone.git` or `git clone https://github.com/Sheeptoaster/Capstone.git`
