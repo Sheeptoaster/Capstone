@@ -47,10 +47,16 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return;
         }
 
+        if (newAmount === "") {
+            setErrors("Please Enter A Valid Amount")
+            return;
+        }
+
         if (newAmount < 0) {
             setErrors("Please Enter A Valid Amount");
             return;
         }
+
 
         if (newAmount * s.price > user.balance) {
             setErrors("Insufficient Balance. Please Select a New Amount.");
@@ -95,6 +101,11 @@ function HomeStockTableRow({ s, setUpdate, user }) {
 
         if (newAmount < 0) {
             setErrors("Please Enter A Valid Amount");
+            return;
+        }
+
+        if (newAmount === "") {
+            setErrors("Please Enter A Valid Amount")
             return;
         }
 
@@ -297,6 +308,16 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     const handleEditAlert = async () => {
         if (priceAlert == 0) {
             setErrors("Please Enter A Value Over 0.");
+            return;
+        }
+
+        if (priceAlert < 0) {
+            setErrors("Please Enter A Value Over 0.");
+            return;
+        }
+
+        if (priceAlert > s.price) {
+            setErrors(`Please Enter A Value Lower Than ${s.name}'s Current Price`)
             return;
         }
         const res = await fetch(`/api/watchlists/create/${s.id}`, {

@@ -8,6 +8,7 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
     const [errors, setErrors] = useState("");
 
     const handleUpdate = async () => {
+        setErrors("")
         if (newAmount === s.priceAlert) {
             setEditAlert(false)
             return
@@ -15,6 +16,16 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
 
         if (newAmount == 0) {
             setErrors("Please Enter A Value Over 0.");
+            return;
+        }
+
+        if (newAmount < 0) {
+            setErrors("Please Enter A Value Over 0.");
+            return;
+        }
+
+        if (newAmount === "") {
+            setErrors("Please Provide A Valid Price.");
             return;
         }
 
@@ -39,6 +50,7 @@ const WatchlistTableRow = ({ s, setUpdate, user }) => {
         setEditAlert(false)
         setConDelete(false)
         setNewAmount(s.priceAlert)
+        setErrors("")
     }
 
     const clickDelete = () => {
