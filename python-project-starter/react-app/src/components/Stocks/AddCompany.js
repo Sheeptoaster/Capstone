@@ -96,6 +96,7 @@ function AddCompany() {
                             name="listPrice"
                             type="number"
                             min={1}
+                            step="any"
                             value={listPrice}
                             onChange={(e) => setListPrice(e.target.value)}
                         />

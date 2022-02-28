@@ -58,7 +58,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         }
 
 
-        if (newAmount * s.price > user.balance) {
+        if (parseFloat(newAmount) * parseFloat(s.price) > parseFloat(user.balance)) {
             setErrors("Insufficient Balance. Please Select a New Amount.");
             return;
         }
@@ -94,12 +94,12 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return;
         }
 
-        if (newAmount > s.owned) {
+        if (parseFloat(newAmount) > parseFloat(s.owned)) {
             setErrors("Please Enter A Valid Amount");
             return;
         }
 
-        if (newAmount < 0) {
+        if (parseFloat(newAmount) < 0) {
             setErrors("Please Enter A Valid Amount");
             return;
         }
@@ -109,7 +109,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return;
         }
 
-        if (newAmount == 0) {
+        if (parseFloat(newAmount) == 0) {
             const res = await fetch(`/api/stocks/sell/${s.id}/${user.id}`, {
                 method: "DELETE",
             });
