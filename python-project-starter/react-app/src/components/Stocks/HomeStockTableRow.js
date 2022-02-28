@@ -316,8 +316,9 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             return;
         }
 
-        if (priceAlert > s.price) {
+        if (parseFloat(priceAlert) > parseFloat(s.price)) {
             setErrors(`Please Enter A Value Lower Than ${s.name}'s Current Price`)
+            console.log(typeof priceAlert, priceAlert, typeof s.price, s.price)
             return;
         }
         const res = await fetch(`/api/watchlists/create/${s.id}`, {
