@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
-import fishMarble from "./fish-marbles.jpg";
-import fallingMarble from "./falling-marbles.jpg";
 import combinedMarble from "./marbles-combined.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import "./LandingTab.css";
 
 function LandingTab() {
     const [tab, setTab] = useState(0);
-    const [aboutTab, setAboutTab] = useState(0);
+    // const [aboutTab, setAboutTab] = useState(0);
 
     useEffect(() => {
         document.title = "Login Page";
