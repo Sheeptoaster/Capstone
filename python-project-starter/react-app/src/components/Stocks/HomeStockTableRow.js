@@ -428,7 +428,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     if (showChart) {
         chart = (
             <tr>
-                <td colSpan={7}>
+                <td colSpan={8}>
                     <TopGrowthChart stock={s} d={""} w={0} />
                 </td>
             </tr>
