@@ -54,7 +54,7 @@ function StockOverview() {
         <>
             {showTable && (
                 <>
-                    <h2 className="stock-chart-highlight-h2">Highlights</h2>
+                    <h2 className="stock-chart-highlight-h2">Investment Highlights</h2>
                     <div className="growth-chart-overview">
                         <TopGrowthChart stock={growth} d={"g"} w={800} />
                         <TopGrowthChart stock={loss} d={"l"} w={800} />
@@ -65,11 +65,12 @@ function StockOverview() {
                 <table>
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Name</th>
                             <th>Ticker</th>
                             <th>Price</th>
                             <th>Day Gain/Loss</th>
-                            <th>Owned</th>
+                            <th style={{"width": "165px"}}>Owned</th>
                             <th>Buy/Sell</th>
                             <th style={{"width": "250px"}}>Watchlist</th>
                         </tr>

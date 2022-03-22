@@ -15,6 +15,7 @@ th {
 	color: white;
 	font-weight: bold;
     text-align: center;
+    width: 6em;
 }
 
 tr {
@@ -47,28 +48,31 @@ td {
     background-color: rgb(133, 250, 133);
 }
 
+
 .green-btn{
     width: fit-content;
-    height: 25px;
-    padding: 8px 13px;
-    border-radius: 36px;
+    height: fit-content;
+    margin: 0;
+    padding: .25em .5em;
+    border-radius: 2em;
     box-shadow: 0 -5px 16px -4px rgba(0, 167, 254, 0.1), 0 5px 8px 1px rgba(93, 211, 109, 0.2);
     background: linear-gradient(#26C778 0%, #32CA76 67%, #5DD36D 100%);;
     color: #FFF;
     text-align: center;
-    font-size: 11pt;
+    font-size: .75em;
 }
 
 .red-btn{
     width: fit-content;
-    height: 25px;
-    padding: 8px 13px;
-    border-radius: 36px;
+    height: fit-content;
+    margin: 0;
+    padding: .25em .5em;
+    border-radius: 2em;
     box-shadow: 0 -5px 8px -4px rgba(255, 0, 0, 0.1), 0 5px 8px 1px rgba(247, 147, 30, 0.2);
     background: linear-gradient(#FF3038 0%, #FF3829 67%, #FF4314 100%);;
     color: #FFF;
     text-align: center;
-    font-size: 11pt;
+    font-size: .75em;
 }
 
 .red-btn:hover, .green-btn:hover {
@@ -76,9 +80,6 @@ td {
 }
 
 
-.options-header {
-    width: fit-content;
-}
 
 .stock-name-header {
     width: 20%;

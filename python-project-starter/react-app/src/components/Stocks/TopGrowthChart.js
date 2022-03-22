@@ -86,6 +86,7 @@ function TopGrowthChart({ stock, d, w }) {
                             options={options}
                             height={450}
                             width={w}
+
                         />
                     </div>
                 </div>

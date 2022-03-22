@@ -69,6 +69,7 @@ function AddCompany() {
                             className="stock-input"
                             name="stockName"
                             value={stockName}
+                            placeholder='Name of Company'
                             maxLength={55}
                             onChange={(e) => setStockName(e.target.value)}
                         />
@@ -80,6 +81,7 @@ function AddCompany() {
                         <input
                             className="stock-input"
                             name="ticker"
+                            placeholder="Ticker Name (Max Length 5)"
                             value={ticker}
                             maxLength={5}
                             onChange={(e) =>
@@ -101,6 +103,7 @@ function AddCompany() {
                             onChange={(e) => setListPrice(e.target.value)}
                         />
                     </div>
+                    <div className="stock-container stock-warning">WARNING: Companies Listed Are Permanent and Can Not Be Deleted</div>
                     <button className="stock-submit-btn">Submit</button>
                     <button className="stock-submit-btn" onClick={handleCancel}>
                         Cancel

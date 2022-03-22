@@ -86,3 +86,8 @@
 ::placeholder {
     color: gray;
 }
+
+.stock-warning {
+    color: #d12525;
+    font-size: .75em;
+}

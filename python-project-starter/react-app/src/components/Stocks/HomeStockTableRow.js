@@ -141,7 +141,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     if (s.owned) {
         if (clickBuy) {
             owned = (
-                <td>
+                <td className="new-balance-container">
                     <p className="watchlist-errors">{errors}</p>
                     <input
                         id="edit-owned"
@@ -168,7 +168,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
             );
         } else if (clickSell) {
             owned = (
-                <td>
+                <td className="new-balance-container">
                     <p className="watchlist-errors">{errors}</p>
                     <input
                         id="edit-owned"
@@ -186,15 +186,13 @@ function HomeStockTableRow({ s, setUpdate, user }) {
                             );
                         }}
                     />
-                    <div className="new-balance-container">
-                        <p className="new-balance">New Balance: </p>
-                        <span className="stock-sell-balance">
-                            {new Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                            }).format(newBalance)}
-                        </span>
-                    </div>
+                    <p className="new-balance">New Balance: </p>
+                    <span className="stock-sell-balance">
+                        {new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                        }).format(newBalance)}
+                    </span>
                 </td>
             );
         } else {
@@ -205,7 +203,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     } else {
         if (clickBuy) {
             owned = (
-                <td>
+                <td className="new-balance-container">
                     <p className="watchlist-errors">{errors}</p>
                     <input
                         id="edit-owned"
@@ -347,9 +345,10 @@ function HomeStockTableRow({ s, setUpdate, user }) {
                 <div className="watched-td-cell">
                     <div className="watchlist-text">Remove From Watchlist</div>
                     <FontAwesomeIcon
-                        icon="fa-bell-slash"
+                        icon="fa-bell"
                         onClick={handleUnwatch}
                         className="watchlist-bell"
+                        style={{"color": "#187A18"}}
                     />
                 </div>
             </td>
@@ -388,8 +387,9 @@ function HomeStockTableRow({ s, setUpdate, user }) {
                     <div className="watched-td-cell">
                         <div className="watchlist-text">Add To Watchlist</div>
                         <FontAwesomeIcon
-                            icon="fa-bell"
+                            icon="fa-bell-slash"
                             className="watchlist-bell"
+                            style={{"color": "#F24444"}}
                         />
                     </div>
                 </td>
@@ -401,7 +401,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
 
     if (parseFloat(((s.price - s.history) / s.history) * 100).toFixed(2) < 0) {
         gains = (
-            <td id="portfolio-stock-loss" onClick={handleChart}>
+            <td id="portfolio-stock-loss">
                 {parseFloat(((s.price - s.history) / s.history) * 100).toFixed(
                     2
                 )}
@@ -412,7 +412,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         parseFloat(((s.price - s.history) / s.history) * 100).toFixed(2) >= 0
     ) {
         gains = (
-            <td id="portfolio-stock-profit" onClick={handleChart}>
+            <td id="portfolio-stock-profit">
                 {parseFloat(((s.price - s.history) / s.history) * 100).toFixed(
                     2
                 )}
@@ -429,7 +429,7 @@ function HomeStockTableRow({ s, setUpdate, user }) {
         chart = (
             <tr>
                 <td colSpan={7}>
-                    <TopGrowthChart stock={s} d={""} w={1325} />
+                    <TopGrowthChart stock={s} d={""} w={0} />
                 </td>
             </tr>
         );
@@ -440,9 +440,10 @@ function HomeStockTableRow({ s, setUpdate, user }) {
     return (
         <>
             <tr>
-                <td onClick={handleChart}>{s.name}</td>
-                <td onClick={handleChart}>{s.ticker}</td>
-                <td onClick={handleChart}>
+                <td className="stock-row-details-expand" onClick={handleChart}>Details</td>
+                <td>{s.name}</td>
+                <td>{s.ticker}</td>
+                <td>
                     {new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "USD",

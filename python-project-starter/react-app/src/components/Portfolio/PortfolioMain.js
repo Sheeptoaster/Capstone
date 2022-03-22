@@ -47,7 +47,7 @@ const PortfolioMain = ({ user }) => {
                         <th className="stock-name-header">Name</th>
                         <th>Ticker</th>
                         <th>Current Price</th>
-                        <th>Owned</th>
+                        <th style={{"width": "165px"}}>Owned</th>
                         <th>Purchase Price</th>
                         <th>Gain/Loss</th>
                         <th className="options-header">Options</th>
