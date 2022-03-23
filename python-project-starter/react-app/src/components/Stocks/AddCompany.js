@@ -103,7 +103,7 @@ function AddCompany() {
                             onChange={(e) => setListPrice(e.target.value)}
                         />
                     </div>
-                    <div className="stock-container stock-warning">WARNING: Companies Listed Are Permanent and Can Not Be Deleted</div>
+                    <div className="stock-container stock-warning"><span style={{"fontSize": '1.05em', 'fontWeight': 'bold'}}>WARNING:&nbsp;</span>Companies Listed Are Permanent and Can Not Be Deleted</div>
                     <button className="stock-submit-btn">Submit</button>
                     <button className="stock-submit-btn" onClick={handleCancel}>
                         Cancel
