@@ -64,14 +64,14 @@ const SignUpForm = ({ setTab }) => {
             type="submit"
             onClick={passwordError}
         >
-            Signup
+            Sign Up
         </button>
     );
 
     if (password !== "" && password === repeatPassword) {
         submitbtn = (
             <button className="form-submit-btn" type="submit">
-                Signup
+                Sign Up
             </button>
         );
     }
@@ -97,7 +97,7 @@ const SignUpForm = ({ setTab }) => {
                             className="login-tab-active"
                             onClick={(e) => setTab(1)}
                         >
-                            <h2>Signup</h2>
+                            <h2>Sign Up</h2>
                         </div>
                     </div>
                     <div className="login-form-errors-container">

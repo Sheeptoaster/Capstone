@@ -52,7 +52,7 @@ const LoginForm = ({ setTab }) => {
                         </div>
 
                         <div className="login-tab" onClick={(e) => setTab(1)}>
-                            <h2>Signup</h2>
+                            <h2>Sign Up</h2>
                         </div>
                     </div>
                     <div className="login-form-errors-container">
